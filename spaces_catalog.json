@@ -1,0 +1,329 @@
+{
+  "spaces": [
+    {
+      "id": "S-01",
+      "level": 1,
+      "name": "Ambiente Estético / Observação",
+      "type": "contemplativo",
+      "mode": "observacao",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 20,
+      "objects": [
+        "cadeiras",
+        "revistas",
+        "janelas_amplas",
+        "esculturas_abstratas"
+      ],
+      "rules": [
+        "sem_fala_obrigatoria",
+        "movimentos_lentos",
+        "foco_em_postura_presenca",
+        "continuidade_permitida"
+      ]
+    },
+    {
+      "id": "S-02",
+      "level": 2,
+      "name": "Sala de Contenção",
+      "type": "regulacao",
+      "mode": "observacao",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 10,
+      "objects": [
+        "poltronas",
+        "luzes_indiretas",
+        "relatorio_em_papel",
+        "agua"
+      ],
+      "rules": [
+        "pouca_fala",
+        "controle_de_postura",
+        "respiracao_guiada",
+        "continuidade_permitida"
+      ]
+    },
+    {
+      "id": "S-03",
+      "level": 3,
+      "name": "Treino Funcional",
+      "type": "atividade",
+      "mode": "atividade",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 30,
+      "objects": [
+        "cordas",
+        "colchonetes",
+        "halteres",
+        "cones"
+      ],
+      "rules": [
+        "mecanica_corporal",
+        "ritmo_progressivo",
+        "pausas_controladas"
+      ]
+    },
+    {
+      "id": "S-04",
+      "level": 4,
+      "name": "Área Casual Social",
+      "type": "convivio",
+      "mode": "atividade",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 35,
+      "objects": [
+        "mesa",
+        "sofas",
+        "bebidas_sem_alcool",
+        "som_ambiente_baixo"
+      ],
+      "rules": [
+        "conversas_breves",
+        "coerencia_social",
+        "sem_exageros"
+      ]
+    },
+    {
+      "id": "S-05",
+      "level": 5,
+      "name": "Cama Elástica",
+      "type": "cinético_estetico",
+      "mode": "atividade",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 40,
+      "objects": [
+        "cama_elastica",
+        "marcacoes_de_chao",
+        "colchoes_laterais"
+      ],
+      "rules": [
+        "saltos_super_slow",
+        "seguranca_de_movimento",
+        "continuidade_permitida"
+      ]
+    },
+    {
+      "id": "S-06",
+      "level": 6,
+      "name": "Banho Controlado",
+      "type": "sensorial",
+      "mode": "atividade",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 55,
+      "objects": [
+        "chuveiros",
+        "toalhas",
+        "armarios",
+        "banco"
+      ],
+      "rules": [
+        "sensorial_sem_grafico",
+        "respeito_a_limites",
+        "ritmo_calmo"
+      ]
+    },
+    {
+      "id": "S-07",
+      "level": 7,
+      "name": "Sauna",
+      "type": "sensorial_controlado",
+      "mode": "observacao",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 60,
+      "objects": [
+        "bancos_de_madeira",
+        "vapor",
+        "toalhas",
+        "balde_de_agua"
+      ],
+      "rules": [
+        "silencio_valido",
+        "respiracao_lenta",
+        "sensorial_sem_grafico",
+        "continuidade_permitida"
+      ]
+    },
+    {
+      "id": "S-08",
+      "level": 8,
+      "name": "Yoga",
+      "type": "disciplina",
+      "mode": "atividade",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 35,
+      "objects": [
+        "tatames",
+        "faixas",
+        "luz_natural"
+      ],
+      "rules": [
+        "controle_de_respiracao",
+        "postura",
+        "ritmo_lento"
+      ]
+    },
+    {
+      "id": "S-09",
+      "level": 9,
+      "name": "Calistenia",
+      "type": "disciplina",
+      "mode": "atividade",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 35,
+      "objects": [
+        "barras",
+        "argolas",
+        "paralelas"
+      ],
+      "rules": [
+        "mecanica_corporal",
+        "repeticoes",
+        "pausas_controladas"
+      ]
+    },
+    {
+      "id": "S-10",
+      "level": 10,
+      "name": "Jacuzzi",
+      "type": "sensorial_ludico",
+      "mode": "observacao",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 65,
+      "objects": [
+        "jacuzzi",
+        "espuma",
+        "toalhas",
+        "apoios"
+      ],
+      "rules": [
+        "sensorial_sem_grafico",
+        "silencio_valido",
+        "continuidade_permitida"
+      ]
+    },
+    {
+      "id": "S-11",
+      "level": 11,
+      "name": "Carga Pesada",
+      "type": "esforco_extremo",
+      "mode": "atividade",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 25,
+      "objects": [
+        "coletes_pesados",
+        "pista_curta",
+        "marcacoes"
+      ],
+      "rules": [
+        "mecanica_corporal",
+        "sem_heroismo",
+        "paradas_controladas"
+      ]
+    },
+    {
+      "id": "S-12",
+      "level": 12,
+      "name": "Vestiário (Transição)",
+      "type": "transicao",
+      "mode": "atividade",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 50,
+      "objects": [
+        "armarios",
+        "bancos",
+        "espelhos",
+        "toalhas"
+      ],
+      "rules": [
+        "praticidade",
+        "coerencia_social",
+        "sem_exageros"
+      ]
+    },
+    {
+      "id": "S-13",
+      "level": 13,
+      "name": "Varanda (Rede de Descanso)",
+      "type": "descanso",
+      "mode": "observacao",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 30,
+      "objects": [
+        "rede",
+        "plantas",
+        "brisa",
+        "cadeira_lateral"
+      ],
+      "rules": [
+        "descanso",
+        "respiracao_lenta",
+        "observacao_silenciosa",
+        "continuidade_permitida"
+      ]
+    },
+    {
+      "id": "S-14",
+      "level": 14,
+      "name": "Dormitório (Coletivo)",
+      "type": "recuperacao",
+      "mode": "observacao",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 20,
+      "objects": [
+        "beliches",
+        "cobertores",
+        "luz_baixa",
+        "ventilacao"
+      ],
+      "rules": [
+        "sono",
+        "pausas_longas",
+        "silencio_valido",
+        "continuidade_permitida"
+      ]
+    },
+    {
+      "id": "S-15",
+      "level": 15,
+      "name": "Piscina",
+      "type": "sensorial",
+      "mode": "atividade",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 60,
+      "objects": [
+        "piscina",
+        "cadeiras_de_sol",
+        "toalhas",
+        "agua"
+      ],
+      "rules": [
+        "sensorial_sem_grafico",
+        "ritmo_calmo",
+        "continuidade_permitida"
+      ]
+    },
+    {
+      "id": "B-01",
+      "level": 101,
+      "name": "Boate Basement 69",
+      "type": "noite",
+      "mode": "atividade",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 90,
+      "objects": [
+        "luzes",
+        "pista",
+        "bar",
+        "fumaça",
+        "som"
+      ],
+      "rules": [
+        "social",
+        "paqueras",
+        "flertes",
+        "namoros",
+        "diversão",
+        "dança"
+      ]
+    }
+  ]
+}
