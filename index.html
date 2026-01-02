@@ -8,21 +8,20 @@
         <style>
             :root {
                 --bg: #0b0e14;
-                --panel: #0f1521;
-                --panel2: #0c111b;
                 --text: #d7dde8;
                 --muted: #8b93a7;
 
-                /* “ANSI sutis” */
+                /* ANSI sutis */
                 --cyan: #58c7d7;
                 --blue: #6aa6ff;
                 --gray: #9aa3b5;
-                --line: #1d2940;
-                --line2: #142033;
 
                 --good: #73e6c7;
                 --warn: #ffcf5a;
                 --bad: #ff6b86;
+
+                --line: #1d2940;
+                --line2: #142033;
 
                 --mono:
                     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
@@ -30,6 +29,18 @@
                 --sans:
                     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
                     Helvetica, Arial, sans-serif;
+
+                --sel: rgba(106, 166, 255, 0.16);
+                --selBorder: rgba(106, 166, 255, 0.45);
+                --selGlow: rgba(106, 166, 255, 0.2);
+
+                --tagBg: rgba(255, 255, 255, 0.04);
+                --tagBd: rgba(255, 255, 255, 0.09);
+
+                --btnBg: rgba(88, 199, 215, 0.12);
+                --btnBd: rgba(88, 199, 215, 0.26);
+                --btnBg2: rgba(106, 166, 255, 0.12);
+                --btnBd2: rgba(106, 166, 255, 0.26);
             }
 
             * {
@@ -52,12 +63,12 @@
             }
 
             .wrap {
-                max-width: 1050px;
-                margin: 28px auto;
-                padding: 0 18px 38px;
+                max-width: 1100px;
+                margin: 28px auto 92px;
+                padding: 0 18px;
             }
 
-            /* Header “box” estilo terminal */
+            /* Header */
             .header-box {
                 border: 1px solid var(--line);
                 border-radius: 12px;
@@ -162,7 +173,7 @@
             .dash {
                 margin-top: 18px;
                 display: grid;
-                grid-template-columns: 1.12fr 0.88fr; /* esquerda + direita */
+                grid-template-columns: 1.12fr 0.88fr;
                 gap: 16px;
             }
             @media (max-width: 860px) {
@@ -218,6 +229,9 @@
                 font-weight: 700;
                 font-size: 13px;
                 letter-spacing: 0.6px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
             }
             .section-title .count {
                 color: var(--muted);
@@ -225,25 +239,38 @@
                 font-family: var(--sans);
             }
 
-            /* “linhas” estilo terminal, mas com grid */
+            /* rows */
             .rows {
                 display: flex;
                 flex-direction: column;
                 gap: 6px;
             }
             .row {
+                user-select: none;
+                cursor: pointer;
                 display: grid;
-                grid-template-columns: 74px 1fr; /* ID | nome */
+                grid-template-columns: 78px 1fr;
                 gap: 12px;
                 align-items: baseline;
-                padding: 7px 10px;
+                padding: 9px 10px;
                 border-radius: 10px;
                 border: 1px solid transparent;
                 background: rgba(255, 255, 255, 0.01);
+                transition:
+                    background 0.12s ease,
+                    border-color 0.12s ease,
+                    box-shadow 0.12s ease;
             }
             .row:hover {
                 border-color: rgba(106, 166, 255, 0.25);
                 background: rgba(106, 166, 255, 0.06);
+            }
+            .row.selected {
+                border-color: var(--selBorder);
+                background: var(--sel);
+                box-shadow:
+                    0 0 0 1px rgba(106, 166, 255, 0.15) inset,
+                    0 0 22px var(--selGlow);
             }
             .id {
                 color: var(--gray);
@@ -256,22 +283,7 @@
                 font-size: 13px;
                 line-height: 1.25;
             }
-            .hint {
-                margin-top: 12px;
-                color: var(--muted);
-                font-family: var(--sans);
-                font-size: 12px;
-            }
 
-            .footer {
-                margin-top: 16px;
-                color: rgba(139, 147, 167, 0.75);
-                font-family: var(--sans);
-                font-size: 12px;
-                text-align: center;
-            }
-
-            /* Small badge for legacy or cluster */
             .badge {
                 display: inline-flex;
                 gap: 6px;
@@ -292,10 +304,127 @@
                 background: rgba(88, 199, 215, 0.1);
                 color: rgba(180, 240, 248, 0.95);
             }
-            .badge.w {
-                border-color: rgba(255, 207, 90, 0.22);
-                background: rgba(255, 207, 90, 0.1);
-                color: rgba(255, 235, 190, 0.95);
+
+            .hint {
+                margin-top: 10px;
+                color: var(--muted);
+                font-family: var(--sans);
+                font-size: 12px;
+            }
+
+            /* Action bar */
+            .actionbar {
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                padding: 12px 14px;
+                background: rgba(10, 14, 20, 0.82);
+                backdrop-filter: blur(10px);
+                border-top: 1px solid rgba(29, 41, 64, 0.65);
+                box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.35);
+            }
+            .actionbar-inner {
+                max-width: 1100px;
+                margin: 0 auto;
+                display: flex;
+                gap: 12px;
+                align-items: center;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                padding: 0 8px;
+            }
+
+            .summary {
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap;
+                align-items: center;
+                font-family: var(--sans);
+                font-size: 12px;
+                color: var(--muted);
+            }
+            .tag {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                border: 1px solid var(--tagBd);
+                background: var(--tagBg);
+                color: rgba(215, 221, 232, 0.95);
+                padding: 6px 10px;
+                border-radius: 999px;
+                font-family: var(--mono);
+                font-size: 12px;
+                letter-spacing: 0.1px;
+                white-space: nowrap;
+            }
+            .tag .k {
+                color: var(--gray);
+                font-weight: 700;
+            }
+            .tag .v {
+                color: var(--text);
+                font-weight: 600;
+            }
+
+            .btns {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+                align-items: center;
+            }
+            .btn {
+                cursor: pointer;
+                border-radius: 12px;
+                padding: 10px 12px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                background: rgba(255, 255, 255, 0.04);
+                color: var(--text);
+                font-family: var(--sans);
+                font-weight: 600;
+                font-size: 13px;
+                letter-spacing: 0.2px;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                transition:
+                    transform 0.06s ease,
+                    background 0.12s ease,
+                    border-color 0.12s ease;
+            }
+            .btn:active {
+                transform: translateY(1px);
+            }
+            .btn.primary {
+                border-color: var(--btnBd2);
+                background: var(--btnBg2);
+            }
+            .btn.secondary {
+                border-color: var(--btnBd);
+                background: var(--btnBg);
+            }
+            .btn:disabled {
+                cursor: not-allowed;
+                opacity: 0.45;
+            }
+
+            .toast {
+                position: fixed;
+                right: 14px;
+                bottom: 78px;
+                max-width: 420px;
+                border: 1px solid rgba(29, 41, 64, 0.75);
+                background: rgba(15, 21, 33, 0.88);
+                border-radius: 12px;
+                padding: 10px 12px;
+                color: rgba(215, 221, 232, 0.95);
+                font-family: var(--sans);
+                font-size: 12px;
+                box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+                display: none;
+            }
+            .toast b {
+                color: var(--good);
             }
 
             /* Loading / error */
@@ -327,7 +456,7 @@
                     <div class="brand">
                         <div class="title">MATRIX :: CONSOLE</div>
                         <div class="subtitle">
-                            dashboard (web) espelhando o go.py
+                            dashboard (web) · seleção → gerar prompt → copiar
                         </div>
                     </div>
 
@@ -337,10 +466,10 @@
                             <b id="status">LOADING</b>
                         </div>
                         <div class="pill">
-                            <span>MODE:</span> <b>CATALOG</b>
+                            <span>MODE:</span> <b id="mode">SELECTOR</b>
                         </div>
                         <div class="pill">
-                            <span>VERSION:</span> <b id="version">web-1.0</b>
+                            <span>VERSION:</span> <b id="version">web-2.0</b>
                         </div>
                     </div>
                 </div>
@@ -351,7 +480,7 @@
                         <input
                             id="filter"
                             autocomplete="off"
-                            placeholder="Digite para filtrar (ex.: U-03, S-11, Manu, Jonas, Noir…)"
+                            placeholder="Filtrar (ex.: U-03, S-11, Manu, Jonas, Noir…)"
                         />
                     </div>
                 </div>
@@ -364,7 +493,7 @@
                 <div class="panel">
                     <div class="panel-head">
                         <div class="h">🌌 UNIVERSOS + 📍 ESPAÇOS</div>
-                        <div class="meta" id="leftMeta"></div>
+                        <div class="meta">selecione 1 (universo OU espaço)</div>
                     </div>
 
                     <div class="section">
@@ -393,7 +522,7 @@
                 <div class="panel">
                     <div class="panel-head">
                         <div class="h">👤 ATIVOS</div>
-                        <div class="meta" id="rightMeta"></div>
+                        <div class="meta">selecione quantos quiser</div>
                     </div>
 
                     <div class="section">
@@ -402,18 +531,81 @@
                             <div class="count" id="aCount"></div>
                         </div>
                         <div class="rows" id="assets"></div>
+                        <div class="hint">
+                            Dica: 1 ativo → solo · 2+ ativos → duo (variação
+                            inferida quando existir cluster).
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="footer">
-                GitHub Pages · layout console · fonte monospace · cores sutis
-                (ciano/azul/cinza)
+        <!-- Action bar -->
+        <div class="actionbar">
+            <div class="actionbar-inner">
+                <div class="summary" id="summary">
+                    <span class="tag"
+                        ><span class="k">Left</span>
+                        <span class="v" id="sumLeft">—</span></span
+                    >
+                    <span class="tag"
+                        ><span class="k">Assets</span>
+                        <span class="v" id="sumAssets">0</span></span
+                    >
+                </div>
+
+                <div class="btns">
+                    <button class="btn" id="btnClear" type="button">
+                        🧹 Limpar
+                    </button>
+                    <button
+                        class="btn secondary"
+                        id="btnPreview"
+                        type="button"
+                        disabled
+                    >
+                        👁️ Prévia
+                    </button>
+                    <button
+                        class="btn primary"
+                        id="btnGenerate"
+                        type="button"
+                        disabled
+                    >
+                        ⚡ Gerar + Copiar
+                    </button>
+                </div>
             </div>
         </div>
 
+        <div class="toast" id="toast"></div>
+
         <script>
             const $ = (id) => document.getElementById(id);
+
+            let DATA = {
+                universes: [],
+                spaces: [],
+                clusters: [],
+                assets: [],
+            };
+
+            // selection state
+            let selectedUniverseId = null;
+            let selectedSpaceId = null;
+            let selectedAssetIds = new Set();
+
+            let lastPrompt = "";
+
+            function toast(html) {
+                const el = $("toast");
+                el.innerHTML = html;
+                el.style.display = "block";
+                clearTimeout(toast._t);
+                toast._t = setTimeout(() => {
+                    el.style.display = "none";
+                }, 2600);
+            }
 
             function showMsg(kind, html) {
                 const el = $("message");
@@ -434,28 +626,6 @@
                     .toLowerCase();
             }
 
-            function makeRow(id, name, extraBadge) {
-                const row = document.createElement("div");
-                row.className = "row";
-                row.dataset.search = norm(`${id} ${name}`);
-
-                const idEl = document.createElement("div");
-                idEl.className = "id";
-                idEl.textContent = id;
-
-                const nameEl = document.createElement("div");
-                nameEl.className = "name";
-                nameEl.textContent = name;
-
-                if (extraBadge) {
-                    nameEl.appendChild(extraBadge);
-                }
-
-                row.appendChild(idEl);
-                row.appendChild(nameEl);
-                return row;
-            }
-
             function badge(text, cls) {
                 const b = document.createElement("span");
                 b.className = `badge ${cls || ""}`.trim();
@@ -463,91 +633,7 @@
                 return b;
             }
 
-            async function loadJSON(path) {
-                const r = await fetch(path, { cache: "no-store" });
-                if (!r.ok) throw new Error(`${path} -> HTTP ${r.status}`);
-                return await r.json();
-            }
-
-            function extractSpaces(spacesJSON) {
-                // novo schema: { spaces: [...], clusters: [...] }
-                if (spacesJSON && Array.isArray(spacesJSON.spaces))
-                    return spacesJSON.spaces;
-                // fallback legacy: lista direta
-                if (Array.isArray(spacesJSON)) return spacesJSON;
-                return [];
-            }
-
-            function extractClusters(spacesJSON) {
-                if (spacesJSON && Array.isArray(spacesJSON.clusters))
-                    return spacesJSON.clusters;
-                return [];
-            }
-
-            function extractUniverses(universesJSON) {
-                // pode ser { universes:[...] } ou lista
-                if (universesJSON && Array.isArray(universesJSON.universes))
-                    return universesJSON.universes;
-                if (Array.isArray(universesJSON)) return universesJSON;
-                return [];
-            }
-
-            function extractAssets(assetsJSON) {
-                // 1) casos “oficiais”
-                if (assetsJSON && Array.isArray(assetsJSON.assets))
-                    return assetsJSON.assets;
-                if (Array.isArray(assetsJSON)) return assetsJSON;
-
-                // 2) casos comuns (wrapper)
-                const commonKeys = [
-                    "items",
-                    "data",
-                    "list",
-                    "actors",
-                    "people",
-                ];
-                for (const k of commonKeys) {
-                    if (assetsJSON && Array.isArray(assetsJSON[k]))
-                        return assetsJSON[k];
-                }
-
-                // 3) heurística: procura a primeira Array dentro do objeto
-                // que pareça lista de assets
-                if (assetsJSON && typeof assetsJSON === "object") {
-                    for (const v of Object.values(assetsJSON)) {
-                        if (Array.isArray(v) && v.length) {
-                            const x = v[0];
-                            if (x && typeof x === "object") {
-                                const looksLikeAsset =
-                                    "asset_id" in x ||
-                                    ("nome" in x && "sobrenome" in x) ||
-                                    ("name" in x && "surname" in x);
-                                if (looksLikeAsset) return v;
-                            }
-                        }
-                        // suporte a 1 nível de nesting: { catalog: { assets:[...] } }
-                        if (v && typeof v === "object") {
-                            for (const vv of Object.values(v)) {
-                                if (Array.isArray(vv) && vv.length) {
-                                    const x = vv[0];
-                                    if (x && typeof x === "object") {
-                                        const looksLikeAsset =
-                                            "asset_id" in x ||
-                                            ("nome" in x && "sobrenome" in x) ||
-                                            ("name" in x && "surname" in x);
-                                        if (looksLikeAsset) return vv;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                return [];
-            }
-
             function byId(a, b) {
-                // ordenação por prefixo + número (U-01, S-11, A-06…)
                 const rx = /^([A-Z]+)-(\d+)/;
                 const ma = rx.exec(a) || [];
                 const mb = rx.exec(b) || [];
@@ -559,76 +645,776 @@
                 return na - nb;
             }
 
-            function renderAll({ universes, spaces, clusters, assets }) {
+            async function loadJSON(path) {
+                const r = await fetch(path, { cache: "no-store" });
+                if (!r.ok) throw new Error(`${path} -> HTTP ${r.status}`);
+                return await r.json();
+            }
+
+            function extractSpaces(spacesJSON) {
+                if (spacesJSON && Array.isArray(spacesJSON.spaces))
+                    return spacesJSON.spaces;
+                if (Array.isArray(spacesJSON)) return spacesJSON;
+                return [];
+            }
+
+            function extractClusters(spacesJSON) {
+                if (spacesJSON && Array.isArray(spacesJSON.clusters))
+                    return spacesJSON.clusters;
+                return [];
+            }
+
+            function extractUniverses(universesJSON) {
+                if (universesJSON && Array.isArray(universesJSON.universes))
+                    return universesJSON.universes;
+                if (Array.isArray(universesJSON)) return universesJSON;
+                return [];
+            }
+
+            // extractor elástico (não engessa schema)
+            function extractAssets(assetsJSON) {
+                if (assetsJSON && Array.isArray(assetsJSON.assets))
+                    return assetsJSON.assets;
+                if (Array.isArray(assetsJSON)) return assetsJSON;
+
+                const commonKeys = [
+                    "items",
+                    "data",
+                    "list",
+                    "people",
+                    "actors",
+                ];
+                for (const k of commonKeys) {
+                    if (assetsJSON && Array.isArray(assetsJSON[k]))
+                        return assetsJSON[k];
+                }
+
+                if (assetsJSON && typeof assetsJSON === "object") {
+                    for (const v of Object.values(assetsJSON)) {
+                        if (
+                            Array.isArray(v) &&
+                            v.length &&
+                            typeof v[0] === "object"
+                        ) {
+                            const x = v[0];
+                            if (
+                                "asset_id" in x ||
+                                ("nome" in x && "sobrenome" in x)
+                            )
+                                return v;
+                        }
+                        if (v && typeof v === "object") {
+                            for (const vv of Object.values(v)) {
+                                if (
+                                    Array.isArray(vv) &&
+                                    vv.length &&
+                                    typeof vv[0] === "object"
+                                ) {
+                                    const x = vv[0];
+                                    if (
+                                        "asset_id" in x ||
+                                        ("nome" in x && "sobrenome" in x)
+                                    )
+                                        return vv;
+                                }
+                            }
+                        }
+                    }
+                }
+                return [];
+            }
+
+            function makeRow({
+                id,
+                name,
+                search,
+                extraBadge,
+                onClick,
+                selected = false,
+            }) {
+                const row = document.createElement("div");
+                row.className = "row" + (selected ? " selected" : "");
+                row.dataset.search = norm(search || `${id} ${name}`);
+                row.dataset.id = id;
+
+                const idEl = document.createElement("div");
+                idEl.className = "id";
+                idEl.textContent = id;
+
+                const nameEl = document.createElement("div");
+                nameEl.className = "name";
+                nameEl.textContent = name;
+
+                if (extraBadge) nameEl.appendChild(extraBadge);
+
+                row.appendChild(idEl);
+                row.appendChild(nameEl);
+
+                row.addEventListener("click", onClick);
+                row.addEventListener("touchstart", () => {}, { passive: true }); // melhora "tap"
+                return row;
+            }
+
+            function updateSummary() {
+                const left = selectedUniverseId
+                    ? selectedUniverseId
+                    : selectedSpaceId
+                      ? selectedSpaceId
+                      : "—";
+                $("sumLeft").textContent = left;
+                $("sumAssets").textContent = String(selectedAssetIds.size);
+
+                const hasSomething = Boolean(
+                    selectedUniverseId ||
+                    selectedSpaceId ||
+                    selectedAssetIds.size,
+                );
+                $("btnGenerate").disabled = !hasSomething;
+                $("btnPreview").disabled = !hasSomething;
+            }
+
+            function applyFilter() {
+                const q = norm($("filter").value);
+                document.querySelectorAll(".row").forEach((r) => {
+                    const ok = !q || (r.dataset.search || "").includes(q);
+                    r.style.display = ok ? "" : "none";
+                });
+            }
+
+            function clearSelection() {
+                selectedUniverseId = null;
+                selectedSpaceId = null;
+                selectedAssetIds = new Set();
+
+                // remove selected class from all
+                document
+                    .querySelectorAll(".row.selected")
+                    .forEach((r) => r.classList.remove("selected"));
+                lastPrompt = "";
+                updateSummary();
+                toast(
+                    `<b>Limpo.</b> Selecione um universo/espaço e os ativos.`,
+                );
+            }
+
+            function selectUniverse(uid) {
+                selectedUniverseId = uid;
+                selectedSpaceId = null;
+
+                // visual: clear left selections, set this one
+                document
+                    .querySelectorAll("#universes .row, #spaces .row")
+                    .forEach((r) => r.classList.remove("selected"));
+                const row = document.querySelector(
+                    `#universes .row[data-id="${CSS.escape(uid)}"]`,
+                );
+                if (row) row.classList.add("selected");
+                updateSummary();
+            }
+
+            function selectSpace(sid) {
+                selectedSpaceId = sid;
+                selectedUniverseId = null;
+
+                document
+                    .querySelectorAll("#universes .row, #spaces .row")
+                    .forEach((r) => r.classList.remove("selected"));
+                const row = document.querySelector(
+                    `#spaces .row[data-id="${CSS.escape(sid)}"]`,
+                );
+                if (row) row.classList.add("selected");
+                updateSummary();
+            }
+
+            function toggleAsset(aid) {
+                if (selectedAssetIds.has(aid)) selectedAssetIds.delete(aid);
+                else selectedAssetIds.add(aid);
+
+                const row = document.querySelector(
+                    `#assets .row[data-id="${CSS.escape(aid)}"]`,
+                );
+                if (row)
+                    row.classList.toggle("selected", selectedAssetIds.has(aid));
+                updateSummary();
+            }
+
+            function getUniverseById(id) {
+                return (
+                    DATA.universes.find(
+                        (u) => (u.id || u.universe_id) === id,
+                    ) || null
+                );
+            }
+            function getSpaceById(id) {
+                return DATA.spaces.find((s) => s.id === id) || null;
+            }
+            function getAssetById(id) {
+                return (
+                    DATA.assets.find((a) => (a.asset_id || a.id) === id) || null
+                );
+            }
+            function buildClusterIndex() {
+                const idx = new Map();
+                for (const c of DATA.clusters) {
+                    if (!c) continue;
+                    if (c.cluster_id) idx.set(c.cluster_id, c);
+                    if (c.id) idx.set(c.id, c);
+                }
+                return idx;
+            }
+
+            // ---------- Prompt builder (elástico) ----------
+            function line(...xs) {
+                return xs.filter(Boolean).join("");
+            }
+            function titleBlock(kind, name) {
+                return `MATRIX — PROMPT GERADOR (${kind})\n\n## ${kind}\n\n**${name || "—"}**\n`;
+            }
+
+            function pick(obj, keys) {
+                for (const k of keys) {
+                    if (
+                        obj &&
+                        obj[k] !== undefined &&
+                        obj[k] !== null &&
+                        obj[k] !== ""
+                    )
+                        return obj[k];
+                }
+                return null;
+            }
+
+            function bulletsFromArray(arr) {
+                if (!Array.isArray(arr) || !arr.length) return "";
+                return arr.map((x) => `- ${String(x)}`).join("\n") + "\n";
+            }
+
+            function describeUniverse(u) {
+                // escreve só o que existe
+                const name = pick(u, ["name", "title"]) || u.id || "Universo";
+                let out = titleBlock("UNIVERSO", name) + "\n";
+
+                const metaPairs = [
+                    ["id", pick(u, ["id", "universe_id"])],
+                    [
+                        "classificação",
+                        pick(u, ["classification", "class", "tier"]),
+                    ],
+                    ["gênero", pick(u, ["genre"])],
+                    ["tom", pick(u, ["tone"])],
+                    ["época", pick(u, ["era", "year", "timeframe"])],
+                    ["localização", pick(u, ["location", "setting"])],
+                    ["política temporal", pick(u, ["temporal_policy"])],
+                    ["política de memória", pick(u, ["memory_policy"])],
+                ].filter(([_, v]) => v);
+
+                if (metaPairs.length) {
+                    out += "## METADADOS\n\n";
+                    out +=
+                        metaPairs.map(([k, v]) => `- ${k}: ${v}`).join("\n") +
+                        "\n\n";
+                }
+
+                const premise = pick(u, [
+                    "premise",
+                    "premissa",
+                    "logline",
+                    "one_liner",
+                    "description",
+                    "descricao",
+                ]);
+                if (premise) {
+                    out += "## PREMISSA\n\n" + premise + "\n\n";
+                }
+
+                const laws = pick(u, ["laws", "rules", "leis", "regras"]);
+                if (Array.isArray(laws)) {
+                    out +=
+                        "## LEIS / REGRAS DO MUNDO\n\n" +
+                        bulletsFromArray(laws) +
+                        "\n";
+                } else if (typeof laws === "string") {
+                    out += "## LEIS / REGRAS DO MUNDO\n\n" + laws + "\n\n";
+                }
+
+                const safety = pick(u, [
+                    "safety_envelope",
+                    "safety",
+                    "envelope",
+                ]);
+                if (safety) {
+                    out += "## SAFETY ENVELOPE\n\n";
+                    if (typeof safety === "string") out += safety + "\n\n";
+                    else {
+                        // escreve de forma humana
+                        const keys = Object.keys(safety);
+                        for (const k of keys) {
+                            const v = safety[k];
+                            if (Array.isArray(v))
+                                out += `- ${k}:\n${v.map((x) => `  - ${x}`).join("\n")}\n`;
+                            else out += `- ${k}: ${String(v)}\n`;
+                        }
+                        out += "\n";
+                    }
+                }
+
+                out += "## DIREÇÃO CRIATIVA (liberdade do Gemini)\n\n";
+                out +=
+                    [
+                        "- Use as informações como base e expanda com criatividade, sem travar em formato.",
+                        "- Você pode criar espaços, detalhes, NPCs e dinâmica social quando necessário para o mundo funcionar.",
+                        "- Continuidade pode ser local ao chat; um novo prompt redefine o setup.",
+                        "- Não liste IDs/códigos no texto. Trate tudo como descrição humana e visual.",
+                    ].join("\n") + "\n\n";
+
+                return out.trim() + "\n";
+            }
+
+            function describeSpace(s, clusterCtx) {
+                const name = s?.name || s?.title || s?.id || "Espaço";
+                let out = titleBlock("ESPAÇO", name) + "\n";
+
+                const metaPairs = [
+                    ["id", s?.id],
+                    ["tipo", pick(s, ["type", "kind"])],
+                    ["modo", pick(s, ["mode"])],
+                    ["interação do usuário", pick(s, ["user_interaction"])],
+                ].filter(([_, v]) => v);
+
+                if (metaPairs.length) {
+                    out +=
+                        "## METADADOS\n\n" +
+                        metaPairs.map(([k, v]) => `- ${k}: ${v}`).join("\n") +
+                        "\n\n";
+                }
+
+                if (clusterCtx) {
+                    out += `## CLUSTER (contrato transversal)\n\n`;
+                    out += `- cluster: ${clusterCtx.name || clusterCtx.id}\n`;
+                    if (clusterCtx.variation)
+                        out += `- variação inferida: ${clusterCtx.variation}\n`;
+                    out += "\n";
+
+                    const contract = clusterCtx.contract;
+                    if (contract) {
+                        if (
+                            Array.isArray(contract.core_principles) &&
+                            contract.core_principles.length
+                        ) {
+                            out +=
+                                "### Princípios\n\n" +
+                                bulletsFromArray(contract.core_principles) +
+                                "\n";
+                        }
+                        if (
+                            Array.isArray(contract.forbidden_outcomes) &&
+                            contract.forbidden_outcomes.length
+                        ) {
+                            out +=
+                                "### Proibido\n\n" +
+                                bulletsFromArray(contract.forbidden_outcomes) +
+                                "\n";
+                        }
+                        if (
+                            contract.execution_requirements &&
+                            typeof contract.execution_requirements === "object"
+                        ) {
+                            out += "### Requisitos mínimos\n\n";
+                            for (const [k, v] of Object.entries(
+                                contract.execution_requirements,
+                            )) {
+                                if (Array.isArray(v))
+                                    out += `- ${k}:\n${v.map((x) => `  - ${x}`).join("\n")}\n`;
+                                else out += `- ${k}: ${String(v)}\n`;
+                            }
+                            out += "\n";
+                        }
+                    }
+
+                    const varDesc = clusterCtx.variation_descriptions;
+                    if (
+                        varDesc &&
+                        clusterCtx.variation &&
+                        varDesc[clusterCtx.variation]
+                    ) {
+                        out += "### Direção de variação\n\n";
+                        const vd = varDesc[clusterCtx.variation];
+                        if (typeof vd === "string") out += vd + "\n\n";
+                        else if (vd && typeof vd === "object") {
+                            for (const [k, v] of Object.entries(vd)) {
+                                out += `- ${k}: ${String(v)}\n`;
+                            }
+                            out += "\n";
+                        }
+                    }
+                }
+
+                const objects = pick(s, ["objects", "objetos"]);
+                if (Array.isArray(objects) && objects.length) {
+                    out +=
+                        "## OBJETOS / AMBIENTE\n\n" +
+                        bulletsFromArray(objects) +
+                        "\n";
+                }
+
+                const rules = pick(s, ["rules", "regras"]);
+                if (Array.isArray(rules) && rules.length) {
+                    out +=
+                        "## REGRAS LOCAIS\n\n" + bulletsFromArray(rules) + "\n";
+                }
+
+                // Campos semânticos novos (se existirem)
+                const semKeys = [
+                    "biomechanics",
+                    "balance_model",
+                    "leverage_model",
+                    "wardrobe_policy",
+                    "erotization_level",
+                    "variation_descriptions",
+                ];
+                const anySem = semKeys.some((k) => s && s[k] !== undefined);
+                if (anySem) {
+                    out += "## PARÂMETROS SEMÂNTICOS\n\n";
+                    for (const k of semKeys) {
+                        const v = s[k];
+                        if (v === undefined || v === null) continue;
+                        if (typeof v === "object") {
+                            out += `- ${k}:\n`;
+                            if (Array.isArray(v))
+                                out +=
+                                    v.map((x) => `  - ${x}`).join("\n") + "\n";
+                            else
+                                out +=
+                                    Object.entries(v)
+                                        .map(
+                                            ([kk, vv]) =>
+                                                `  - ${kk}: ${String(vv)}`,
+                                        )
+                                        .join("\n") + "\n";
+                        } else {
+                            out += `- ${k}: ${String(v)}\n`;
+                        }
+                    }
+                    out += "\n";
+                }
+
+                out += "## DIREÇÃO CRIATIVA (liberdade do Gemini)\n\n";
+                out +=
+                    [
+                        "- Execute o espaço acima como âncora, mas deixe a cena viva e funcional.",
+                        "- Você pode inventar detalhes de cenário, iluminação, som, ritmo e micro-acontecimentos.",
+                        "- Continuidade local ao chat é permitida; reset só por novo prompt/chat.",
+                        "- Não liste IDs/códigos no texto.",
+                    ].join("\n") + "\n\n";
+
+                return out.trim() + "\n";
+            }
+
+            function describeAssets(selectedAssets) {
+                let out = "## ATIVOS PRESENTES\n\n";
+                for (const a of selectedAssets) {
+                    const full =
+                        `${a.nome || ""} ${a.sobrenome || ""}`.trim() ||
+                        a.asset_id ||
+                        a.id ||
+                        "Ativo";
+                    const birth = pick(a, ["data_nascimento", "nascimento"]);
+                    const idade = pick(a, ["idade"]);
+                    const signo = pick(a, ["signo"]);
+                    const altura = pick(a, ["altura_cm"]);
+                    const peso = pick(a, ["peso_kg"]);
+
+                    const hair = pick(a, ["cor_cabelo"]);
+                    const cut = pick(a, ["corte_penteado"]);
+                    const skin = pick(a, ["cor_pele"]);
+                    const eyes = pick(a, ["cor_olhos"]);
+
+                    const body = pick(a, ["estrutura_corpo"]);
+                    const fat = pick(a, ["tecido_adiposo"]);
+                    const mus = pick(a, ["musculatura"]);
+
+                    const persona = pick(a, ["personalidade"]);
+                    const asc = pick(a, ["ascendente"]);
+                    const ascConf = pick(a, [
+                        "ascendente_confianca",
+                        "ascendente_confidence",
+                    ]);
+
+                    out += `- **${full}** — `;
+                    const bits = [];
+                    if (birth) bits.push(`nascimento ${birth}`);
+                    if (idade !== null && idade !== undefined)
+                        bits.push(`idade ${idade}`);
+                    if (signo) bits.push(`signo ${signo}`);
+                    if (altura) bits.push(`altura ${altura} cm`);
+                    if (peso) bits.push(`peso ${peso} kg`);
+                    if (bits.length) out += `Dados: ${bits.join("; ")}. `;
+
+                    const ap = [];
+                    if (hair) ap.push(`cabelo ${hair}`);
+                    if (cut) ap.push(`corte ${cut}`);
+                    if (skin) ap.push(`pele ${skin}`);
+                    if (eyes) ap.push(`olhos ${eyes}`);
+                    if (ap.length) out += `Aparência: ${ap.join("; ")}. `;
+
+                    const cb = [];
+                    if (body) cb.push(body);
+                    if (fat !== null && fat !== undefined)
+                        cb.push(`tecido adiposo ${fat}/100`);
+                    if (mus !== null && mus !== undefined)
+                        cb.push(`musculatura ${mus}/100`);
+                    if (cb.length) out += `Corpo: ${cb.join("; ")}. `;
+
+                    const pp = [];
+                    if (persona) pp.push(persona);
+                    if (asc) {
+                        const confTxt =
+                            ascConf !== null && ascConf !== undefined
+                                ? ` (conf. ${ascConf})`
+                                : "";
+                        pp.push(`ascendente ${asc}${confTxt}`);
+                    }
+                    if (pp.length) out += `Personalidade: ${pp.join("; ")}. `;
+
+                    out +=
+                        "Vestuário: marcas premium e bonitas, escolhidas livremente conforme o contexto (figurino responde ao ambiente).\n";
+                }
+                out += "\n";
+                return out;
+            }
+
+            function buildPrompt() {
+                const selectedAssets = Array.from(selectedAssetIds)
+                    .map((id) => getAssetById(id))
+                    .filter(Boolean);
+
+                const hasU = Boolean(selectedUniverseId);
+                const hasS = Boolean(selectedSpaceId);
+                const hasA = selectedAssets.length > 0;
+
+                // Mode decisions (igual ao go.py, sem exigir ordem)
+                if (hasU) {
+                    const u = getUniverseById(selectedUniverseId);
+                    let out =
+                        "MATRIX — PROMPT GERADOR (UNIVERSO" +
+                        (hasA ? " + ATIVOS" : "") +
+                        ")\n\n";
+                    out += "## UNIVERSO ATIVO\n\n";
+                    out += `**${(u && (u.name || u.title)) || selectedUniverseId}**\n\n`;
+                    // universo detalhado
+                    if (u) out += describeUniverse(u) + "\n";
+                    if (hasA) out += describeAssets(selectedAssets);
+
+                    out += "## DIREÇÃO CRIATIVA (liberdade do Gemini)\n\n";
+                    out +=
+                        [
+                            "- Use o universo como regra de mundo; crie espaços e cenas livremente para o mundo funcionar.",
+                            "- Não trave em formato. Priorize impacto, ritmo e decisões concretas.",
+                            "- Continuidade local ao chat é permitida; reset por novo prompt/chat.",
+                            "- Não liste IDs/códigos no texto.",
+                        ].join("\n") + "\n";
+                    return out.trim() + "\n";
+                }
+
+                if (hasS) {
+                    const s = getSpaceById(selectedSpaceId);
+                    const clusterIndex = buildClusterIndex();
+                    let clusterCtx = null;
+
+                    if (
+                        s &&
+                        s.cluster_binding &&
+                        s.cluster_binding.cluster_id
+                    ) {
+                        const cid = s.cluster_binding.cluster_id;
+                        const c = clusterIndex.get(cid);
+
+                        if (
+                            s.cluster_binding.requires_cluster_validation &&
+                            !c
+                        ) {
+                            throw new Error(
+                                `Space ${s.id} exige cluster ${cid}, mas o cluster não existe.`,
+                            );
+                        }
+
+                        if (c) {
+                            const variation = hasA
+                                ? selectedAssets.length >= 2
+                                    ? "duo"
+                                    : "solo"
+                                : null;
+                            clusterCtx = {
+                                id: cid,
+                                name: c.name || cid,
+                                contract: c.contract || null,
+                                variation,
+                                variation_descriptions:
+                                    c.variations ||
+                                    c.variation_descriptions ||
+                                    null,
+                            };
+                        }
+                    }
+
+                    let out =
+                        "MATRIX — PROMPT GERADOR (ESPAÇO" +
+                        (hasA ? " + ATIVOS" : "") +
+                        ")\n\n";
+                    out += "## ESPAÇO ATIVO\n\n";
+                    out += `**${(s && s.name) || selectedSpaceId}**\n\n`;
+                    if (s) out += describeSpace(s, clusterCtx) + "\n";
+                    if (hasA) out += describeAssets(selectedAssets);
+
+                    out += "## DIREÇÃO CRIATIVA (liberdade do Gemini)\n\n";
+                    out +=
+                        [
+                            "- Execute o espaço como âncora, mas deixe a cena viva e funcional.",
+                            "- Você pode criar micro-eventos e variações de ritmo para começar no impacto (cold open).",
+                            "- Continuidade local ao chat é permitida; reset por novo prompt/chat.",
+                            "- Não liste IDs/códigos no texto.",
+                        ].join("\n") + "\n";
+                    return out.trim() + "\n";
+                }
+
+                // assets only
+                if (hasA) {
+                    let out = "MATRIX — PROMPT GERADOR (ATIVOS)\n\n";
+                    out += "## ATIVOS PRESENTES\n\n";
+                    out += describeAssets(selectedAssets);
+                    out += "## DIREÇÃO CRIATIVA (liberdade do Gemini)\n\n";
+                    out +=
+                        [
+                            "- Use os ativos como motor da cena e crie o ambiente necessário livremente.",
+                            "- Vestuário: marcas premium e bonitas, escolhidas conforme o contexto.",
+                            "- Não liste IDs/códigos no texto.",
+                        ].join("\n") + "\n";
+                    return out.trim() + "\n";
+                }
+
+                return "";
+            }
+
+            async function copyToClipboard(text) {
+                // Clipboard API (melhor)
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(text);
+                    return true;
+                }
+                // fallback
+                const ta = document.createElement("textarea");
+                ta.value = text;
+                ta.style.position = "fixed";
+                ta.style.left = "-9999px";
+                document.body.appendChild(ta);
+                ta.select();
+                const ok = document.execCommand("copy");
+                document.body.removeChild(ta);
+                return ok;
+            }
+
+            function openPreview(prompt) {
+                // Preview simples via new window (não intrusivo)
+                const w = window.open("", "_blank");
+                if (!w) {
+                    toast(
+                        `<b>Popup bloqueado.</b> Mesmo assim o botão Gerar+Copiar funciona.`,
+                    );
+                    return;
+                }
+                w.document.write(
+                    `<pre style="white-space:pre-wrap;font-family:ui-monospace, Menlo, Monaco, Consolas, monospace; padding:16px; background:#0b0e14; color:#d7dde8;">${escapeHtml(prompt)}</pre>`,
+                );
+                w.document.close();
+            }
+
+            function escapeHtml(s) {
+                return String(s).replace(
+                    /[&<>"']/g,
+                    (c) =>
+                        ({
+                            "&": "&amp;",
+                            "<": "&lt;",
+                            ">": "&gt;",
+                            '"': "&quot;",
+                            "'": "&#39;",
+                        })[c],
+                );
+            }
+
+            function renderAll() {
                 const uBox = $("universes");
                 const sBox = $("spaces");
                 const aBox = $("assets");
-
                 uBox.innerHTML = "";
                 sBox.innerHTML = "";
                 aBox.innerHTML = "";
 
-                // counts
-                $("uCount").textContent = `${universes.length} itens`;
-                $("sCount").textContent = `${spaces.length} itens`;
-                $("aCount").textContent = `${assets.length} itens`;
+                $("uCount").textContent = `${DATA.universes.length} itens`;
+                $("sCount").textContent = `${DATA.spaces.length} itens`;
+                $("aCount").textContent = `${DATA.assets.length} itens`;
 
-                $("leftMeta").textContent = "catalog";
-                $("rightMeta").textContent = "catalog";
+                // clusters hint
+                const hasCluster = DATA.spaces.some(
+                    (s) => s.cluster_binding && s.cluster_binding.cluster_id,
+                );
+                if (hasCluster) {
+                    $("clusterHint").style.display = "block";
+                    $("clusterHint").textContent =
+                        "Clusters aparecem como badge (contrato herdado). Clusters não são executáveis.";
+                } else {
+                    $("clusterHint").style.display = "none";
+                }
 
-                // Universes
-                universes
+                // universes
+                DATA.universes
                     .slice()
                     .sort((x, y) => byId(x.id || "", y.id || ""))
                     .forEach((u) => {
-                        const uid = u.id || "";
+                        const uid = u.id || u.universe_id || "";
                         const name = u.name || u.title || "(sem nome)";
-                        // se tiver algum marcador de legacy (seu go.py detecta; aqui deixo opcional)
-                        const b =
-                            u.legacy === true ? badge("LEGACY", "w") : null;
-                        uBox.appendChild(makeRow(uid, name, b));
+                        const row = makeRow({
+                            id: uid,
+                            name,
+                            search: `${uid} ${name}`,
+                            selected: uid === selectedUniverseId,
+                            onClick: () => selectUniverse(uid),
+                        });
+                        uBox.appendChild(row);
                     });
 
-                // Spaces
-                const clusterIndex = new Map();
-                clusters.forEach((c) => {
-                    if (c && c.cluster_id) clusterIndex.set(c.cluster_id, c);
-                    if (c && c.id) clusterIndex.set(c.id, c);
-                });
-
-                let anyCluster = false;
-
-                spaces
+                // spaces
+                const clusterIndex = buildClusterIndex();
+                DATA.spaces
                     .slice()
                     .sort((x, y) => byId(x.id || "", y.id || ""))
                     .forEach((s) => {
                         const sid = s.id || "";
                         const name = s.name || "(sem nome)";
-
                         let b = null;
-                        const bind = s.cluster_binding;
-                        if (bind && bind.cluster_id) {
-                            const c = clusterIndex.get(bind.cluster_id);
+                        if (s.cluster_binding && s.cluster_binding.cluster_id) {
+                            const c = clusterIndex.get(
+                                s.cluster_binding.cluster_id,
+                            );
                             const label = c?.name
                                 ? `C ${c.name}`
-                                : `C ${bind.cluster_id}`;
+                                : `C ${s.cluster_binding.cluster_id}`;
                             b = badge(label, "c");
-                            anyCluster = true;
                         }
-                        sBox.appendChild(makeRow(sid, name, b));
+
+                        const row = makeRow({
+                            id: sid,
+                            name,
+                            search: `${sid} ${name}`,
+                            extraBadge: b,
+                            selected: sid === selectedSpaceId,
+                            onClick: () => selectSpace(sid),
+                        });
+                        sBox.appendChild(row);
                     });
 
-                if (anyCluster) {
-                    const hint = $("clusterHint");
-                    hint.style.display = "block";
-                    hint.textContent =
-                        "Clusters aparecem como badges (contratos herdados) — não são executáveis.";
-                } else {
-                    $("clusterHint").style.display = "none";
-                }
-
-                // Assets
-                assets
+                // assets
+                DATA.assets
                     .slice()
                     .sort((x, y) =>
                         byId(
@@ -641,20 +1427,18 @@
                         const full =
                             `${a.nome || ""} ${a.sobrenome || ""}`.trim() ||
                             "(sem nome)";
-                        aBox.appendChild(makeRow(aid, full));
+                        const row = makeRow({
+                            id: aid,
+                            name: full,
+                            search: `${aid} ${full}`,
+                            selected: selectedAssetIds.has(aid),
+                            onClick: () => toggleAsset(aid),
+                        });
+                        aBox.appendChild(row);
                     });
 
-                // filter binding
-                const filter = $("filter");
-                const applyFilter = () => {
-                    const q = norm(filter.value);
-                    const rows = document.querySelectorAll(".row");
-                    rows.forEach((r) => {
-                        const ok = !q || (r.dataset.search || "").includes(q);
-                        r.style.display = ok ? "" : "none";
-                    });
-                };
-                filter.addEventListener("input", applyFilter);
+                updateSummary();
+                applyFilter();
             }
 
             async function init() {
@@ -672,13 +1456,16 @@
                             loadJSON("./universes.json"),
                         ]);
 
-                    const assets = extractAssets(assetsJSON);
-                    const spaces = extractSpaces(spacesJSON);
-                    const clusters = extractClusters(spacesJSON);
-                    const universes = extractUniverses(universesJSON);
+                    DATA.assets = extractAssets(assetsJSON);
+                    DATA.spaces = extractSpaces(spacesJSON);
+                    DATA.clusters = extractClusters(spacesJSON);
+                    DATA.universes = extractUniverses(universesJSON);
 
-                    // sanity check básico
-                    if (!assets.length && !spaces.length && !universes.length) {
+                    if (
+                        !DATA.assets.length &&
+                        !DATA.spaces.length &&
+                        !DATA.universes.length
+                    ) {
                         throw new Error(
                             "Nenhum dado carregado (JSONs vazios ou formato inesperado).",
                         );
@@ -686,16 +1473,64 @@
 
                     $("message").style.display = "none";
                     $("dash").style.display = "grid";
-
-                    renderAll({ universes, spaces, clusters, assets });
                     setStatus("READY");
+
+                    // filter
+                    $("filter").addEventListener("input", applyFilter);
+
+                    // buttons
+                    $("btnClear").addEventListener("click", clearSelection);
+
+                    $("btnPreview").addEventListener("click", () => {
+                        try {
+                            const prompt = buildPrompt();
+                            if (!prompt) return;
+                            lastPrompt = prompt;
+                            openPreview(prompt);
+                        } catch (e) {
+                            toast(
+                                `<b>Erro:</b> ${escapeHtml(e.message || String(e))}`,
+                            );
+                        }
+                    });
+
+                    $("btnGenerate").addEventListener("click", async () => {
+                        try {
+                            const prompt = buildPrompt();
+                            if (!prompt) {
+                                toast(
+                                    `<b>Nada selecionado.</b> Escolha um universo/espaço e/ou ativos.`,
+                                );
+                                return;
+                            }
+                            lastPrompt = prompt;
+                            const ok = await copyToClipboard(prompt);
+                            if (ok)
+                                toast(
+                                    `<b>Copiado!</b> Agora é só colar no Gemini.`,
+                                );
+                            else
+                                toast(
+                                    `<b>Falhou ao copiar.</b> Use a prévia para copiar manualmente.`,
+                                );
+                        } catch (e) {
+                            toast(
+                                `<b>Erro:</b> ${escapeHtml(e.message || String(e))}`,
+                            );
+                        }
+                    });
+
+                    renderAll();
+                    toast(
+                        `<b>Ready.</b> Selecione 1 item à esquerda e N ativos à direita.`,
+                    );
                 } catch (err) {
                     setStatus("ERROR");
                     showMsg(
                         "error",
                         `<b>Erro ao carregar dados.</b><br><br>
            ${String(err.message || err)}<br><br>
-           Verifique se <code>assets.json</code>, <code>spaces.json</code> e <code>universes.json</code> estão na raiz do repo e acessíveis pelo Pages.`,
+           Confirme que <code>assets.json</code>, <code>spaces.json</code> e <code>universes.json</code> estão na raiz do repo e acessíveis pelo Pages.`,
                     );
                 }
             }
