@@ -248,10 +248,7 @@
             .row {
                 user-select: none;
                 cursor: pointer;
-                display: grid;
-                grid-template-columns: 78px 1fr;
-                gap: 12px;
-                align-items: baseline;
+                display: block;
                 padding: 9px 10px;
                 border-radius: 10px;
                 border: 1px solid transparent;
@@ -271,11 +268,6 @@
                 box-shadow:
                     0 0 0 1px rgba(106, 166, 255, 0.15) inset,
                     0 0 22px var(--selGlow);
-            }
-            .id {
-                color: var(--gray);
-                font-weight: 700;
-                letter-spacing: 0.4px;
             }
             .name {
                 color: var(--text);
@@ -632,6 +624,14 @@
                 b.textContent = text;
                 return b;
             }
+            function byName(aName, aId, bName, bId) {
+                const an = norm(aName || "");
+                const bn = norm(bName || "");
+                if (an && bn && an !== bn) return an.localeCompare(bn);
+                if (an && !bn) return -1;
+                if (!an && bn) return 1;
+                return String(aId || "").localeCompare(String(bId || ""));
+            }
 
             function byId(a, b) {
                 const rx = /^([A-Z]+)-(\d+)/;
@@ -737,21 +737,16 @@
                 row.dataset.search = norm(search || `${id} ${name}`);
                 row.dataset.id = id;
 
-                const idEl = document.createElement("div");
-                idEl.className = "id";
-                idEl.textContent = id;
-
                 const nameEl = document.createElement("div");
                 nameEl.className = "name";
                 nameEl.textContent = name;
 
                 if (extraBadge) nameEl.appendChild(extraBadge);
 
-                row.appendChild(idEl);
                 row.appendChild(nameEl);
 
                 row.addEventListener("click", onClick);
-                row.addEventListener("touchstart", () => {}, { passive: true }); // melhora "tap"
+                row.addEventListener("touchstart", () => {}, { passive: true });
                 return row;
             }
 
@@ -1369,7 +1364,14 @@
                 // universes
                 DATA.universes
                     .slice()
-                    .sort((x, y) => byId(x.id || "", y.id || ""))
+                    .sort((x, y) =>
+                        byName(
+                            x.name || x.title || "",
+                            x.id || x.universe_id || "",
+                            y.name || y.title || "",
+                            y.id || y.universe_id || "",
+                        ),
+                    )
                     .forEach((u) => {
                         const uid = u.id || u.universe_id || "";
                         const name = u.name || u.title || "(sem nome)";
@@ -1387,7 +1389,14 @@
                 const clusterIndex = buildClusterIndex();
                 DATA.spaces
                     .slice()
-                    .sort((x, y) => byId(x.id || "", y.id || ""))
+                    .sort((x, y) =>
+                        byName(
+                            x.name || x.title || "",
+                            x.id || "",
+                            y.name || y.title || "",
+                            y.id || "",
+                        ),
+                    )
                     .forEach((s) => {
                         const sid = s.id || "";
                         const name = s.name || "(sem nome)";
@@ -1416,12 +1425,18 @@
                 // assets
                 DATA.assets
                     .slice()
-                    .sort((x, y) =>
-                        byId(
+                    .sort((x, y) => {
+                        const xn =
+                            `${x.nome || ""} ${x.sobrenome || ""}`.trim();
+                        const yn =
+                            `${y.nome || ""} ${y.sobrenome || ""}`.trim();
+                        return byName(
+                            xn,
                             x.asset_id || x.id || "",
+                            yn,
                             y.asset_id || y.id || "",
-                        ),
-                    )
+                        );
+                    })
                     .forEach((a) => {
                         const aid = a.asset_id || a.id || "";
                         const full =
