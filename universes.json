@@ -286,6 +286,140 @@
         "ideal_para_critica_social",
         "nao_exigir_coerencia_realista"
       ]
+    },
+    {
+      "id": "U-06",
+      "name": "Cyber Night City",
+      "classification": "cyberpunk_sensual",
+      "temporal_policy": "fragmentado_noturno",
+      "memory_policy": "local_fluida",
+      "tone": [
+        "neon",
+        "desejo_sintetico",
+        "alienacao_estetica",
+        "seducao_fria"
+      ],
+      "themes": [
+        "corpo_como_interface",
+        "identidade_fluida",
+        "prazer_como_estimulo",
+        "solidão_em_rede"
+      ],
+      "aesthetic": {
+        "lighting": "neon_contraste_alto",
+        "environment": [
+          "ruas_molhadas",
+          "hologramas",
+          "clubes_subterraneos",
+          "quartos_modulares"
+        ],
+        "sensory": [
+          "chuva_constante",
+          "luz_artificial",
+          "musica_eletronica_distante"
+        ]
+      },
+      "execution_guidelines": [
+        "o_executor_pode_criar_espacos_livremente",
+        "a_camera_e_o_ambiente_podem_agir_como_personagem",
+        "o_desejo_e_estetico_antes_de_ser_emocional"
+      ],
+      "creative_freedom": {
+        "space_generation": true,
+        "social_dynamics": "livre",
+        "visual_language": "cinematica_fragmentada"
+      },
+      "safety_envelope": {
+        "erotization_max": 80,
+        "violence_max": 60,
+        "explicit_limits": [
+          "evitar_grafismo",
+          "priorizar_estilo_sobre_explicitude"
+        ]
+      }
+    },
+    {
+      "id": "U-07",
+      "name": "Reality Show Distortion",
+      "classification": "meta_drama_parodia",
+      "temporal_policy": "editado",
+      "memory_policy": "observada",
+      "tone": ["performatico", "ironico", "exagerado", "instavel"],
+      "themes": [
+        "identidade_como_performance",
+        "vigilancia_constante",
+        "verdade_editada",
+        "afeto_como_estrategia"
+      ],
+      "aesthetic": {
+        "lighting": "televisivo_artificial",
+        "environment": [
+          "casas_monitoradas",
+          "confessionarios",
+          "areas_comuns_estetizadas"
+        ],
+        "sensory": [
+          "cameras_visiveis",
+          "microfones",
+          "silencios_constrangedores"
+        ]
+      },
+      "execution_guidelines": [
+        "o_executor_pode_simular_edicao_e_cortes",
+        "nenhuma_fala_e_totalmente_confiavel",
+        "o_publico_implícito_afeta_o_comportamento"
+      ],
+      "creative_freedom": {
+        "space_generation": true,
+        "meta_narrative": true,
+        "breaking_fourth_wall": "permitido"
+      },
+      "safety_envelope": {
+        "erotization_max": 75,
+        "violence_max": 40,
+        "explicit_limits": [
+          "parodia_sem_humilhacao_real",
+          "exagero_sem_crueldade"
+        ]
+      }
+    },
+    {
+      "id": "U-08",
+      "name": "Mythic Gymnasium",
+      "classification": "mitologia_contemporanea",
+      "temporal_policy": "atemporal_moderno",
+      "memory_policy": "arquetipica",
+      "tone": ["simbolico", "estetico", "solene", "contemporaneo"],
+      "themes": [
+        "deuses_em_corpos_jovens",
+        "rotina_como_rito",
+        "forca_como_identidade",
+        "mito_no_cotidiano"
+      ],
+      "aesthetic": {
+        "lighting": "natural_dramatizada",
+        "environment": [
+          "academias_minimalistas",
+          "vestiarios_silenciosos",
+          "espacos_abertos_com_luz_branca"
+        ],
+        "sensory": ["respiracao", "movimento_controlado", "silencio_respeitoso"]
+      },
+      "execution_guidelines": [
+        "o_executor_trata_o_corpo_como_simbolo",
+        "a_estetica_e_prioritaria_sobre_a_narrativa",
+        "os_espacos_podem_funcionar_como_templos_modernos"
+      ],
+      "creative_freedom": {
+        "space_generation": true,
+        "symbolic_layers": "livre",
+        "dialogue_density": "baixa"
+      },
+      "safety_envelope": {
+        "erotization_max": 80,
+        "violence_max": 30,
+        "explicit_limits": ["evitar_pornografia", "priorizar_escultura_e_forma"]
+      }
     }
   ]
 }
