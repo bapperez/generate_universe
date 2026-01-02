@@ -493,10 +493,56 @@
             }
 
             function extractAssets(assetsJSON) {
-                // pode ser { assets:[...] } ou lista
+                // 1) casos “oficiais”
                 if (assetsJSON && Array.isArray(assetsJSON.assets))
                     return assetsJSON.assets;
                 if (Array.isArray(assetsJSON)) return assetsJSON;
+
+                // 2) casos comuns (wrapper)
+                const commonKeys = [
+                    "items",
+                    "data",
+                    "list",
+                    "actors",
+                    "people",
+                ];
+                for (const k of commonKeys) {
+                    if (assetsJSON && Array.isArray(assetsJSON[k]))
+                        return assetsJSON[k];
+                }
+
+                // 3) heurística: procura a primeira Array dentro do objeto
+                // que pareça lista de assets
+                if (assetsJSON && typeof assetsJSON === "object") {
+                    for (const v of Object.values(assetsJSON)) {
+                        if (Array.isArray(v) && v.length) {
+                            const x = v[0];
+                            if (x && typeof x === "object") {
+                                const looksLikeAsset =
+                                    "asset_id" in x ||
+                                    ("nome" in x && "sobrenome" in x) ||
+                                    ("name" in x && "surname" in x);
+                                if (looksLikeAsset) return v;
+                            }
+                        }
+                        // suporte a 1 nível de nesting: { catalog: { assets:[...] } }
+                        if (v && typeof v === "object") {
+                            for (const vv of Object.values(v)) {
+                                if (Array.isArray(vv) && vv.length) {
+                                    const x = vv[0];
+                                    if (x && typeof x === "object") {
+                                        const looksLikeAsset =
+                                            "asset_id" in x ||
+                                            ("nome" in x && "sobrenome" in x) ||
+                                            ("name" in x && "surname" in x);
+                                        if (looksLikeAsset) return vv;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
                 return [];
             }
 
