@@ -261,6 +261,7 @@
                 />
 
                 <div class="actions">
+                    <button id="btnCopyPreview">Copiar prompt preview</button>
                     <button id="btnDownload">Baixar universes.json</button>
                     <button
                         class="disabled"
@@ -584,6 +585,45 @@ Direção criativa:
             el("btnDownload").addEventListener("click", downloadJSON);
 
             load();
+            function copyPreview() {
+                const text = el("preview").textContent || "";
+                if (!text.trim()) {
+                    alert("Nada para copiar.");
+                    return;
+                }
+
+                // Clipboard API moderna
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard
+                        .writeText(text)
+                        .then(() => {
+                            setStatus(
+                                "Prompt preview copiado para a área de transferência",
+                            );
+                        })
+                        .catch(() => fallbackCopy(text));
+                } else {
+                    fallbackCopy(text);
+                }
+            }
+
+            function fallbackCopy(text) {
+                const ta = document.createElement("textarea");
+                ta.value = text;
+                ta.style.position = "fixed";
+                ta.style.opacity = "0";
+                document.body.appendChild(ta);
+                ta.select();
+                try {
+                    document.execCommand("copy");
+                    setStatus("Prompt preview copiado (modo compatibilidade)");
+                } catch (err) {
+                    alert("Falha ao copiar o texto.");
+                }
+                document.body.removeChild(ta);
+            }
+
+            el("btnCopyPreview").addEventListener("click", copyPreview);
         </script>
     </body>
 </html>
