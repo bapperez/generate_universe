@@ -1,206 +1,660 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <title>MATRIX — Gerador de Espaço</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>MATRIX :: CONSOLE</title>
 
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: #0e0e11;
-      color: #f1f1f1;
-      margin: 0;
-      padding: 20px;
-    }
+        <style>
+            :root {
+                --bg: #0b0e14;
+                --panel: #0f1521;
+                --panel2: #0c111b;
+                --text: #d7dde8;
+                --muted: #8b93a7;
 
-    h1 {
-      font-size: 1.4rem;
-      margin-bottom: 20px;
-      font-weight: 600;
-    }
+                /* “ANSI sutis” */
+                --cyan: #58c7d7;
+                --blue: #6aa6ff;
+                --gray: #9aa3b5;
+                --line: #1d2940;
+                --line2: #142033;
 
-    .container {
-      max-width: 900px;
-      margin: auto;
-    }
+                --good: #73e6c7;
+                --warn: #ffcf5a;
+                --bad: #ff6b86;
 
-    label {
-      display: block;
-      margin-top: 20px;
-      margin-bottom: 6px;
-      font-size: 0.9rem;
-      opacity: 0.8;
-    }
+                --mono:
+                    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+                    "Liberation Mono", monospace;
+                --sans:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    Helvetica, Arial, sans-serif;
+            }
 
-    select, textarea, button {
-      width: 100%;
-      border-radius: 6px;
-      border: none;
-      padding: 10px;
-      font-size: 0.95rem;
-    }
+            * {
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                height: 100%;
+            }
+            body {
+                margin: 0;
+                background: radial-gradient(
+                    1200px 600px at 20% 0%,
+                    #0f1626 0%,
+                    var(--bg) 60%
+                );
+                color: var(--text);
+                font-family: var(--mono);
+                letter-spacing: 0.2px;
+            }
 
-    select {
-      background: #1c1c22;
-      color: #fff;
-    }
+            .wrap {
+                max-width: 1050px;
+                margin: 28px auto;
+                padding: 0 18px 38px;
+            }
 
-    .assets {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 10px;
-      margin-top: 10px;
-    }
+            /* Header “box” estilo terminal */
+            .header-box {
+                border: 1px solid var(--line);
+                border-radius: 12px;
+                background: linear-gradient(
+                    180deg,
+                    rgba(255, 255, 255, 0.03),
+                    rgba(255, 255, 255, 0.01)
+                );
+                padding: 14px 16px;
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+            }
 
-    .asset {
-      background: #1c1c22;
-      padding: 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      border: 1px solid transparent;
-    }
+            .header-top {
+                display: flex;
+                gap: 12px;
+                align-items: center;
+                justify-content: space-between;
+                flex-wrap: wrap;
+            }
 
-    .asset.selected {
-      border-color: #6ee7b7;
-      background: #1f2d2a;
-    }
+            .brand {
+                display: flex;
+                align-items: baseline;
+                gap: 10px;
+                min-width: 260px;
+            }
+            .brand .title {
+                font-weight: 700;
+                color: var(--cyan);
+                font-size: 14px;
+                letter-spacing: 1.2px;
+            }
+            .brand .subtitle {
+                color: var(--muted);
+                font-size: 12px;
+                font-family: var(--sans);
+            }
 
-    button {
-      margin-top: 20px;
-      background: #6ee7b7;
-      color: #000;
-      font-weight: 600;
-      cursor: pointer;
-    }
+            .statusline {
+                display: flex;
+                gap: 14px;
+                flex-wrap: wrap;
+                font-size: 12px;
+                color: var(--gray);
+            }
+            .pill {
+                border: 1px solid var(--line2);
+                background: rgba(88, 199, 215, 0.06);
+                padding: 6px 10px;
+                border-radius: 999px;
+                display: flex;
+                gap: 6px;
+                align-items: center;
+            }
+            .pill b {
+                color: var(--text);
+                font-weight: 600;
+            }
+            .dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: var(--good);
+                box-shadow: 0 0 12px rgba(115, 230, 199, 0.35);
+            }
 
-    button.secondary {
-      background: #444;
-      color: #fff;
-      margin-top: 10px;
-    }
+            .controls {
+                margin-top: 12px;
+                display: flex;
+                gap: 12px;
+                flex-wrap: wrap;
+                align-items: center;
+            }
+            .control {
+                display: flex;
+                gap: 8px;
+                align-items: center;
+                border: 1px solid var(--line2);
+                background: rgba(255, 255, 255, 0.02);
+                border-radius: 10px;
+                padding: 10px 12px;
+                flex: 1 1 320px;
+                min-width: 240px;
+            }
+            .control label {
+                color: var(--muted);
+                font-size: 12px;
+                font-family: var(--sans);
+                white-space: nowrap;
+            }
+            .control input {
+                width: 100%;
+                background: transparent;
+                border: none;
+                outline: none;
+                color: var(--text);
+                font-family: var(--mono);
+                font-size: 13px;
+            }
 
-    textarea {
-      margin-top: 20px;
-      min-height: 280px;
-      background: #111;
-      color: #dcdcdc;
-      resize: vertical;
-    }
+            /* Dashboard layout */
+            .dash {
+                margin-top: 18px;
+                display: grid;
+                grid-template-columns: 1.12fr 0.88fr; /* esquerda + direita */
+                gap: 16px;
+            }
+            @media (max-width: 860px) {
+                .dash {
+                    grid-template-columns: 1fr;
+                }
+            }
 
-    .footer {
-      margin-top: 30px;
-      font-size: 0.75rem;
-      opacity: 0.5;
-      text-align: center;
-    }
-  </style>
-</head>
+            .panel {
+                border: 1px solid var(--line);
+                border-radius: 12px;
+                background: rgba(15, 21, 33, 0.65);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+                overflow: hidden;
+            }
+            .panel .panel-head {
+                padding: 12px 14px;
+                border-bottom: 1px solid var(--line2);
+                background: rgba(12, 17, 27, 0.7);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+            }
+            .panel .panel-head .h {
+                color: var(--cyan);
+                font-weight: 700;
+                letter-spacing: 0.8px;
+                font-size: 13px;
+            }
+            .panel .panel-head .meta {
+                color: var(--muted);
+                font-size: 12px;
+                font-family: var(--sans);
+            }
 
-<body>
-  <div class="container">
-    <h1>MATRIX — Gerador de Espaço</h1>
+            .section {
+                padding: 10px 14px 14px;
+            }
+            .section + .section {
+                border-top: 1px dashed rgba(29, 41, 64, 0.7);
+                padding-top: 12px;
+            }
+            .section-title {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+                margin: 2px 0 10px;
+            }
+            .section-title .t {
+                color: var(--blue);
+                font-weight: 700;
+                font-size: 13px;
+                letter-spacing: 0.6px;
+            }
+            .section-title .count {
+                color: var(--muted);
+                font-size: 12px;
+                font-family: var(--sans);
+            }
 
-    <!-- Espaço -->
-    <label for="space">Espaço</label>
-    <select id="space">
-      <!-- preenchido via JS -->
-    </select>
+            /* “linhas” estilo terminal, mas com grid */
+            .rows {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+            }
+            .row {
+                display: grid;
+                grid-template-columns: 74px 1fr; /* ID | nome */
+                gap: 12px;
+                align-items: baseline;
+                padding: 7px 10px;
+                border-radius: 10px;
+                border: 1px solid transparent;
+                background: rgba(255, 255, 255, 0.01);
+            }
+            .row:hover {
+                border-color: rgba(106, 166, 255, 0.25);
+                background: rgba(106, 166, 255, 0.06);
+            }
+            .id {
+                color: var(--gray);
+                font-weight: 700;
+                letter-spacing: 0.4px;
+            }
+            .name {
+                color: var(--text);
+                font-family: var(--sans);
+                font-size: 13px;
+                line-height: 1.25;
+            }
+            .hint {
+                margin-top: 12px;
+                color: var(--muted);
+                font-family: var(--sans);
+                font-size: 12px;
+            }
 
-    <!-- Ativos -->
-    <label>Ativos</label>
-    <div class="assets" id="assets"></div>
+            .footer {
+                margin-top: 16px;
+                color: rgba(139, 147, 167, 0.75);
+                font-family: var(--sans);
+                font-size: 12px;
+                text-align: center;
+            }
 
-    <!-- Botões -->
-    <button onclick="gerarPrompt()">Gerar Prompt</button>
-    <button class="secondary" onclick="copiar()">Copiar</button>
+            /* Small badge for legacy or cluster */
+            .badge {
+                display: inline-flex;
+                gap: 6px;
+                align-items: center;
+                font-size: 11px;
+                font-family: var(--sans);
+                color: rgba(215, 221, 232, 0.9);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                background: rgba(255, 255, 255, 0.03);
+                padding: 3px 8px;
+                border-radius: 999px;
+                margin-left: 8px;
+                vertical-align: middle;
+                white-space: nowrap;
+            }
+            .badge.c {
+                border-color: rgba(88, 199, 215, 0.2);
+                background: rgba(88, 199, 215, 0.1);
+                color: rgba(180, 240, 248, 0.95);
+            }
+            .badge.w {
+                border-color: rgba(255, 207, 90, 0.22);
+                background: rgba(255, 207, 90, 0.1);
+                color: rgba(255, 235, 190, 0.95);
+            }
 
-    <!-- Resultado -->
-    <textarea id="output" placeholder="O prompt aparecerá aqui..."></textarea>
+            /* Loading / error */
+            .msg {
+                margin-top: 16px;
+                border: 1px solid var(--line);
+                border-radius: 12px;
+                padding: 14px 16px;
+                background: rgba(15, 21, 33, 0.5);
+                font-family: var(--sans);
+                color: var(--muted);
+            }
+            .msg b {
+                color: var(--text);
+            }
+            .msg.error {
+                border-color: rgba(255, 107, 134, 0.25);
+            }
+            .msg.error b {
+                color: var(--bad);
+            }
+        </style>
+    </head>
 
-    <div class="footer">
-      MATRIX · prompt generator
-    </div>
-  </div>
+    <body>
+        <div class="wrap">
+            <div class="header-box">
+                <div class="header-top">
+                    <div class="brand">
+                        <div class="title">MATRIX :: CONSOLE</div>
+                        <div class="subtitle">
+                            dashboard (web) espelhando o go.py
+                        </div>
+                    </div>
 
-  <script>
-    // ======= DADOS MOCK (substituir por API depois) =======
+                    <div class="statusline">
+                        <div class="pill">
+                            <span class="dot"></span> <span>STATUS:</span>
+                            <b id="status">LOADING</b>
+                        </div>
+                        <div class="pill">
+                            <span>MODE:</span> <b>CATALOG</b>
+                        </div>
+                        <div class="pill">
+                            <span>VERSION:</span> <b id="version">web-1.0</b>
+                        </div>
+                    </div>
+                </div>
 
-    const spaces = [
-      { id: "S-11", name: "Carga Pesada" },
-      { id: "S-10", name: "Jacuzzi" },
-      { id: "S-07", name: "Sauna" },
-      { id: "S-14", name: "Dormitório (Coletivo)" }
-    ];
+                <div class="controls">
+                    <div class="control">
+                        <label for="filter">Filtro</label>
+                        <input
+                            id="filter"
+                            autocomplete="off"
+                            placeholder="Digite para filtrar (ex.: U-03, S-11, Manu, Jonas, Noir…)"
+                        />
+                    </div>
+                </div>
+            </div>
 
-    const assets = [
-      { id: "A-01", name: "Timothée Chalamet" },
-      { id: "A-02", name: "Channing Tatum" },
-      { id: "A-03", name: "Armie Hammer" },
-      { id: "A-08", name: "Jacob Elordi" },
-      { id: "A-09", name: "Manu Ríos" },
-      { id: "A-10", name: "Bill Skarsgård" }
-    ];
+            <div id="message" class="msg" style="display: none"></div>
 
-    const selectedAssets = new Set();
+            <div class="dash" id="dash" style="display: none">
+                <!-- LEFT -->
+                <div class="panel">
+                    <div class="panel-head">
+                        <div class="h">🌌 UNIVERSOS + 📍 ESPAÇOS</div>
+                        <div class="meta" id="leftMeta"></div>
+                    </div>
 
-    // ======= INIT =======
+                    <div class="section">
+                        <div class="section-title">
+                            <div class="t">🌌 UNIVERSOS</div>
+                            <div class="count" id="uCount"></div>
+                        </div>
+                        <div class="rows" id="universes"></div>
+                    </div>
 
-    const spaceSelect = document.getElementById("space");
-    spaces.forEach(s => {
-      const opt = document.createElement("option");
-      opt.value = s.id;
-      opt.textContent = s.name;
-      spaceSelect.appendChild(opt);
-    });
+                    <div class="section">
+                        <div class="section-title">
+                            <div class="t">📍 ESPAÇOS</div>
+                            <div class="count" id="sCount"></div>
+                        </div>
+                        <div class="rows" id="spaces"></div>
+                        <div
+                            class="hint"
+                            id="clusterHint"
+                            style="display: none"
+                        ></div>
+                    </div>
+                </div>
 
-    const assetsDiv = document.getElementById("assets");
-    assets.forEach(a => {
-      const div = document.createElement("div");
-      div.className = "asset";
-      div.textContent = a.name;
-      div.onclick = () => {
-        if (selectedAssets.has(a.id)) {
-          selectedAssets.delete(a.id);
-          div.classList.remove("selected");
-        } else {
-          selectedAssets.add(a.id);
-          div.classList.add("selected");
-        }
-      };
-      assetsDiv.appendChild(div);
-    });
+                <!-- RIGHT -->
+                <div class="panel">
+                    <div class="panel-head">
+                        <div class="h">👤 ATIVOS</div>
+                        <div class="meta" id="rightMeta"></div>
+                    </div>
 
-    // ======= AÇÕES =======
+                    <div class="section">
+                        <div class="section-title">
+                            <div class="t">👤 ATIVOS DISPONÍVEIS</div>
+                            <div class="count" id="aCount"></div>
+                        </div>
+                        <div class="rows" id="assets"></div>
+                    </div>
+                </div>
+            </div>
 
-    function gerarPrompt() {
-      const spaceId = spaceSelect.value;
-      const assetsIds = Array.from(selectedAssets);
+            <div class="footer">
+                GitHub Pages · layout console · fonte monospace · cores sutis
+                (ciano/azul/cinza)
+            </div>
+        </div>
 
-      if (!spaceId || assetsIds.length === 0) {
-        alert("Selecione um espaço e ao menos um ativo.");
-        return;
-      }
+        <script>
+            const $ = (id) => document.getElementById(id);
 
-      // Placeholder enquanto não há backend
-      const prompt = `
-MATRIX — PROMPT GERADOR DE ESPAÇO
+            function showMsg(kind, html) {
+                const el = $("message");
+                el.className = "msg" + (kind === "error" ? " error" : "");
+                el.innerHTML = html;
+                el.style.display = "block";
+            }
 
-Espaço selecionado: ${spaceId}
-Ativos selecionados: ${assetsIds.join(", ")}
+            function setStatus(text) {
+                $("status").textContent = text;
+            }
 
-(Este texto será substituído pela resposta real do backend Python.)
-      `.trim();
+            function norm(s) {
+                return (s ?? "")
+                    .toString()
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "")
+                    .toLowerCase();
+            }
 
-      document.getElementById("output").value = prompt;
-    }
+            function makeRow(id, name, extraBadge) {
+                const row = document.createElement("div");
+                row.className = "row";
+                row.dataset.search = norm(`${id} ${name}`);
 
-    function copiar() {
-      const textarea = document.getElementById("output");
-      textarea.select();
-      document.execCommand("copy");
-      alert("Prompt copiado!");
-    }
-  </script>
-</body>
+                const idEl = document.createElement("div");
+                idEl.className = "id";
+                idEl.textContent = id;
+
+                const nameEl = document.createElement("div");
+                nameEl.className = "name";
+                nameEl.textContent = name;
+
+                if (extraBadge) {
+                    nameEl.appendChild(extraBadge);
+                }
+
+                row.appendChild(idEl);
+                row.appendChild(nameEl);
+                return row;
+            }
+
+            function badge(text, cls) {
+                const b = document.createElement("span");
+                b.className = `badge ${cls || ""}`.trim();
+                b.textContent = text;
+                return b;
+            }
+
+            async function loadJSON(path) {
+                const r = await fetch(path, { cache: "no-store" });
+                if (!r.ok) throw new Error(`${path} -> HTTP ${r.status}`);
+                return await r.json();
+            }
+
+            function extractSpaces(spacesJSON) {
+                // novo schema: { spaces: [...], clusters: [...] }
+                if (spacesJSON && Array.isArray(spacesJSON.spaces))
+                    return spacesJSON.spaces;
+                // fallback legacy: lista direta
+                if (Array.isArray(spacesJSON)) return spacesJSON;
+                return [];
+            }
+
+            function extractClusters(spacesJSON) {
+                if (spacesJSON && Array.isArray(spacesJSON.clusters))
+                    return spacesJSON.clusters;
+                return [];
+            }
+
+            function extractUniverses(universesJSON) {
+                // pode ser { universes:[...] } ou lista
+                if (universesJSON && Array.isArray(universesJSON.universes))
+                    return universesJSON.universes;
+                if (Array.isArray(universesJSON)) return universesJSON;
+                return [];
+            }
+
+            function extractAssets(assetsJSON) {
+                // pode ser { assets:[...] } ou lista
+                if (assetsJSON && Array.isArray(assetsJSON.assets))
+                    return assetsJSON.assets;
+                if (Array.isArray(assetsJSON)) return assetsJSON;
+                return [];
+            }
+
+            function byId(a, b) {
+                // ordenação por prefixo + número (U-01, S-11, A-06…)
+                const rx = /^([A-Z]+)-(\d+)/;
+                const ma = rx.exec(a) || [];
+                const mb = rx.exec(b) || [];
+                const pa = ma[1] || a;
+                const pb = mb[1] || b;
+                if (pa !== pb) return pa.localeCompare(pb);
+                const na = parseInt(ma[2] || "0", 10);
+                const nb = parseInt(mb[2] || "0", 10);
+                return na - nb;
+            }
+
+            function renderAll({ universes, spaces, clusters, assets }) {
+                const uBox = $("universes");
+                const sBox = $("spaces");
+                const aBox = $("assets");
+
+                uBox.innerHTML = "";
+                sBox.innerHTML = "";
+                aBox.innerHTML = "";
+
+                // counts
+                $("uCount").textContent = `${universes.length} itens`;
+                $("sCount").textContent = `${spaces.length} itens`;
+                $("aCount").textContent = `${assets.length} itens`;
+
+                $("leftMeta").textContent = "catalog";
+                $("rightMeta").textContent = "catalog";
+
+                // Universes
+                universes
+                    .slice()
+                    .sort((x, y) => byId(x.id || "", y.id || ""))
+                    .forEach((u) => {
+                        const uid = u.id || "";
+                        const name = u.name || u.title || "(sem nome)";
+                        // se tiver algum marcador de legacy (seu go.py detecta; aqui deixo opcional)
+                        const b =
+                            u.legacy === true ? badge("LEGACY", "w") : null;
+                        uBox.appendChild(makeRow(uid, name, b));
+                    });
+
+                // Spaces
+                const clusterIndex = new Map();
+                clusters.forEach((c) => {
+                    if (c && c.cluster_id) clusterIndex.set(c.cluster_id, c);
+                    if (c && c.id) clusterIndex.set(c.id, c);
+                });
+
+                let anyCluster = false;
+
+                spaces
+                    .slice()
+                    .sort((x, y) => byId(x.id || "", y.id || ""))
+                    .forEach((s) => {
+                        const sid = s.id || "";
+                        const name = s.name || "(sem nome)";
+
+                        let b = null;
+                        const bind = s.cluster_binding;
+                        if (bind && bind.cluster_id) {
+                            const c = clusterIndex.get(bind.cluster_id);
+                            const label = c?.name
+                                ? `C ${c.name}`
+                                : `C ${bind.cluster_id}`;
+                            b = badge(label, "c");
+                            anyCluster = true;
+                        }
+                        sBox.appendChild(makeRow(sid, name, b));
+                    });
+
+                if (anyCluster) {
+                    const hint = $("clusterHint");
+                    hint.style.display = "block";
+                    hint.textContent =
+                        "Clusters aparecem como badges (contratos herdados) — não são executáveis.";
+                } else {
+                    $("clusterHint").style.display = "none";
+                }
+
+                // Assets
+                assets
+                    .slice()
+                    .sort((x, y) =>
+                        byId(
+                            x.asset_id || x.id || "",
+                            y.asset_id || y.id || "",
+                        ),
+                    )
+                    .forEach((a) => {
+                        const aid = a.asset_id || a.id || "";
+                        const full =
+                            `${a.nome || ""} ${a.sobrenome || ""}`.trim() ||
+                            "(sem nome)";
+                        aBox.appendChild(makeRow(aid, full));
+                    });
+
+                // filter binding
+                const filter = $("filter");
+                const applyFilter = () => {
+                    const q = norm(filter.value);
+                    const rows = document.querySelectorAll(".row");
+                    rows.forEach((r) => {
+                        const ok = !q || (r.dataset.search || "").includes(q);
+                        r.style.display = ok ? "" : "none";
+                    });
+                };
+                filter.addEventListener("input", applyFilter);
+            }
+
+            async function init() {
+                try {
+                    setStatus("LOADING");
+                    showMsg(
+                        "",
+                        `<b>Carregando</b> assets.json · spaces.json · universes.json …`,
+                    );
+
+                    const [assetsJSON, spacesJSON, universesJSON] =
+                        await Promise.all([
+                            loadJSON("./assets.json"),
+                            loadJSON("./spaces.json"),
+                            loadJSON("./universes.json"),
+                        ]);
+
+                    const assets = extractAssets(assetsJSON);
+                    const spaces = extractSpaces(spacesJSON);
+                    const clusters = extractClusters(spacesJSON);
+                    const universes = extractUniverses(universesJSON);
+
+                    // sanity check básico
+                    if (!assets.length && !spaces.length && !universes.length) {
+                        throw new Error(
+                            "Nenhum dado carregado (JSONs vazios ou formato inesperado).",
+                        );
+                    }
+
+                    $("message").style.display = "none";
+                    $("dash").style.display = "grid";
+
+                    renderAll({ universes, spaces, clusters, assets });
+                    setStatus("READY");
+                } catch (err) {
+                    setStatus("ERROR");
+                    showMsg(
+                        "error",
+                        `<b>Erro ao carregar dados.</b><br><br>
+           ${String(err.message || err)}<br><br>
+           Verifique se <code>assets.json</code>, <code>spaces.json</code> e <code>universes.json</code> estão na raiz do repo e acessíveis pelo Pages.`,
+                    );
+                }
+            }
+
+            init();
+        </script>
+    </body>
 </html>
