@@ -13,10 +13,10 @@
                 --text: #e6e8eb;
                 --muted: #9aa4b2;
                 --accent: #4cc9f0;
+                --border: #222;
                 --danger: #ff6b6b;
                 --ok: #51cf66;
             }
-
             * {
                 box-sizing: border-box;
             }
@@ -30,53 +30,78 @@
                     BlinkMacSystemFont,
                     sans-serif;
             }
-
             header {
                 padding: 12px 16px;
                 background: var(--panel);
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                border-bottom: 1px solid #222;
+                border-bottom: 1px solid var(--border);
             }
-
             header h1 {
                 font-size: 16px;
                 margin: 0;
                 letter-spacing: 1px;
             }
-
             .status {
                 font-size: 12px;
                 color: var(--muted);
             }
-
             main {
                 display: grid;
-                grid-template-columns: 260px 1fr 420px;
+                grid-template-columns: 280px 1fr 420px;
                 height: calc(100vh - 56px);
             }
-
             aside {
                 background: var(--panel);
-                border-right: 1px solid #222;
+                border-right: 1px solid var(--border);
                 padding: 12px;
                 overflow-y: auto;
             }
-
-            .list-item {
-                padding: 8px;
-                border-radius: 4px;
-                cursor: pointer;
-                margin-bottom: 4px;
+            .toolbar {
+                display: flex;
+                gap: 8px;
+                margin-bottom: 10px;
+                flex-wrap: wrap;
             }
-
+            button {
+                background: #223047;
+                color: var(--text);
+                border: 1px solid #2a3a58;
+                padding: 8px 10px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 12px;
+            }
+            button:hover {
+                background: #2d3f5f;
+            }
+            button.disabled {
+                opacity: 0.45;
+                cursor: not-allowed;
+            }
+            .search {
+                width: 100%;
+                padding: 8px;
+                background: #0f131a;
+                border: 1px solid var(--border);
+                color: var(--text);
+                border-radius: 6px;
+                margin-bottom: 10px;
+            }
+            .list-item {
+                padding: 9px 10px;
+                border-radius: 8px;
+                cursor: pointer;
+                margin-bottom: 6px;
+                border: 1px solid transparent;
+            }
             .list-item:hover {
                 background: var(--panel-2);
             }
-
             .list-item.active {
                 background: #223047;
+                border-color: rgba(76, 201, 240, 0.25);
                 color: var(--accent);
             }
 
@@ -84,72 +109,67 @@
                 padding: 16px;
                 overflow-y: auto;
             }
-
             section.preview {
                 background: var(--panel-2);
                 padding: 16px;
                 overflow-y: auto;
-                border-left: 1px solid #222;
+                border-left: 1px solid var(--border);
             }
-
             h2 {
-                font-size: 14px;
-                margin-top: 24px;
+                font-size: 13px;
+                margin-top: 18px;
                 margin-bottom: 8px;
                 color: var(--accent);
+                letter-spacing: 0.5px;
             }
-
             label {
                 display: block;
                 font-size: 12px;
                 color: var(--muted);
-                margin-top: 12px;
+                margin-top: 10px;
             }
-
             input,
             textarea {
                 width: 100%;
-                padding: 8px;
+                padding: 9px;
                 background: #0f131a;
-                border: 1px solid #222;
+                border: 1px solid var(--border);
                 color: var(--text);
-                border-radius: 4px;
+                border-radius: 6px;
             }
-
             textarea {
-                min-height: 60px;
+                min-height: 70px;
                 resize: vertical;
             }
-
-            .buttons {
+            .row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .actions {
                 display: flex;
                 gap: 8px;
                 margin-top: 12px;
+                flex-wrap: wrap;
             }
-
-            button {
-                background: #223047;
-                color: var(--text);
-                border: none;
-                padding: 8px 12px;
-                border-radius: 4px;
-                cursor: pointer;
+            .hint {
+                color: var(--muted);
                 font-size: 12px;
+                margin-top: 8px;
             }
-
-            button:hover {
-                background: #2d3f5f;
-            }
-
-            button.disabled {
-                opacity: 0.4;
-                cursor: not-allowed;
-            }
-
             .preview-box {
                 white-space: pre-wrap;
                 font-size: 13px;
-                line-height: 1.5;
+                line-height: 1.55;
+            }
+            .pill {
+                display: inline-block;
+                padding: 2px 8px;
+                border: 1px solid rgba(76, 201, 240, 0.25);
+                border-radius: 999px;
+                color: var(--accent);
+                font-size: 11px;
+                margin-left: 8px;
             }
         </style>
     </head>
@@ -161,54 +181,102 @@
         </header>
 
         <main>
-            <!-- LISTA -->
             <aside>
-                <div class="buttons">
-                    <button onclick="newUniverse()">Novo</button>
-                    <button onclick="restoreDraft()">Restaurar rascunho</button>
+                <div class="toolbar">
+                    <button id="btnNew">Novo</button>
+                    <button id="btnRestore">Restaurar rascunho</button>
                 </div>
+
+                <input
+                    id="search"
+                    class="search"
+                    placeholder="Filtrar (ex.: U-05, Faria, Noir…)"
+                />
+
                 <div id="universeList"></div>
+
+                <div class="hint">
+                    Auto-save: <span class="pill">ON</span> (localStorage)
+                </div>
             </aside>
 
-            <!-- EDITOR -->
             <section class="editor">
                 <h2>Básico</h2>
-                <label>ID</label>
-                <input id="id" />
-
-                <label>Nome</label>
-                <input id="name" />
+                <div class="row">
+                    <div>
+                        <label>ID</label>
+                        <input id="f_id" placeholder="U-09" />
+                    </div>
+                    <div>
+                        <label>Nome</label>
+                        <input
+                            id="f_name"
+                            placeholder="Ex.: Cyber Night City"
+                        />
+                    </div>
+                </div>
 
                 <label>Classification</label>
-                <input id="classification" />
+                <input
+                    id="f_classification"
+                    placeholder="Ex.: sandbox_controlado / misterio_comedia_leve"
+                />
 
                 <h2>Políticas</h2>
-                <label>Temporal policy</label>
-                <input id="temporal_policy" />
-
-                <label>Memory policy</label>
-                <input id="memory_policy" />
+                <div class="row">
+                    <div>
+                        <label>Temporal policy</label>
+                        <input
+                            id="f_temporal"
+                            placeholder="Ex.: linear_local"
+                        />
+                    </div>
+                    <div>
+                        <label>Memory policy</label>
+                        <input id="f_memory" placeholder="Ex.: isolada" />
+                    </div>
+                </div>
 
                 <h2>Tom & Temas</h2>
                 <label>Tom (um por linha)</label>
-                <textarea id="tone"></textarea>
+                <textarea
+                    id="f_tone"
+                    placeholder="pastelao&#10;inocente"
+                ></textarea>
 
                 <label>Temas (um por linha)</label>
-                <textarea id="themes"></textarea>
+                <textarea
+                    id="f_themes"
+                    placeholder="mistério&#10;amizade&#10;humor"
+                ></textarea>
 
                 <h2>Safety</h2>
                 <label>Erotization max (0–100)</label>
-                <input id="erotization_max" type="number" min="0" max="100" />
+                <input
+                    id="f_erot"
+                    type="number"
+                    min="0"
+                    max="100"
+                    placeholder="Ex.: 35"
+                />
 
-                <div class="buttons">
-                    <button onclick="downloadJSON()">
-                        Baixar universes.json
+                <div class="actions">
+                    <button id="btnDownload">Baixar universes.json</button>
+                    <button
+                        class="disabled"
+                        title="Preparado para o futuro (GitHub API/OAuth)"
+                        disabled
+                    >
+                        Salvar no GitHub
                     </button>
-                    <button class="disabled">Salvar no GitHub</button>
+                </div>
+
+                <div class="hint">
+                    Importante: este editor preserva campos desconhecidos do seu
+                    schema (não apaga metadados avançados).
                 </div>
             </section>
 
-            <!-- PREVIEW -->
             <section class="preview">
                 <h2>Preview narrativo</h2>
                 <div class="preview-box" id="preview"></div>
@@ -216,15 +284,110 @@
         </main>
 
         <script>
-            const STORAGE_KEY = "matrix_universes_draft";
+            /**
+             * Editor SAFE:
+             * - Suporta universes.json como array puro OU {universes:[...]}
+             * - Preserva todos os campos desconhecidos por universo
+             * - Fallback para legacy keys (title/nome, class, etc.)
+             * - Auto-save contínuo em localStorage
+             */
+
+            const STORAGE_KEY = "matrix_universes_draft_v2";
+            const SOURCE_URL = "./universes.json";
+
+            let rootIsArray = false;
             let universes = [];
             let currentIndex = null;
 
-            // ---------- LOAD ----------
-            fetch("./universes.json")
-                .then((r) => r.json())
-                .then((data) => {
-                    universes = Array.isArray(data) ? data : data.universes;
+            const el = (id) => document.getElementById(id);
+
+            function setStatus(msg) {
+                el("status").textContent = msg;
+            }
+
+            function toLines(arr) {
+                return (Array.isArray(arr) ? arr : []).join("\n");
+            }
+
+            function fromLines(text) {
+                return (text || "")
+                    .split("\n")
+                    .map((s) => s.trim())
+                    .filter(Boolean);
+            }
+
+            function clamp01to100(n) {
+                const x = Number.isFinite(n) ? n : 0;
+                return Math.max(0, Math.min(100, Math.round(x)));
+            }
+
+            // Fallbacks legacy
+            function getName(u) {
+                return u?.name ?? u?.title ?? u?.nome ?? "";
+            }
+            function setName(u, v) {
+                if ("name" in u || (!("title" in u) && !("nome" in u)))
+                    u.name = v;
+                else if ("title" in u) u.title = v;
+                else if ("nome" in u) u.nome = v;
+                else u.name = v;
+            }
+            function getClassification(u) {
+                return u?.classification ?? u?.class ?? u?.classificacao ?? "";
+            }
+            function setClassification(u, v) {
+                if (
+                    "classification" in u ||
+                    (!("class" in u) && !("classificacao" in u))
+                )
+                    u.classification = v;
+                else if ("class" in u) u.class = v;
+                else if ("classificacao" in u) u.classificacao = v;
+                else u.classification = v;
+            }
+            function getTemporal(u) {
+                return u?.temporal_policy ?? u?.temporal ?? "";
+            }
+            function setTemporal(u, v) {
+                if ("temporal_policy" in u || !("temporal" in u))
+                    u.temporal_policy = v;
+                else u.temporal = v;
+            }
+            function getMemory(u) {
+                return u?.memory_policy ?? u?.memory ?? "";
+            }
+            function setMemory(u, v) {
+                if ("memory_policy" in u || !("memory" in u))
+                    u.memory_policy = v;
+                else u.memory = v;
+            }
+            function getErotMax(u) {
+                // prefer safety_envelope.erotization_max; fallback para outras chaves se existirem
+                const se = u?.safety_envelope;
+                if (se && se.erotization_max != null)
+                    return clamp01to100(Number(se.erotization_max));
+                if (u?.erotization_max != null)
+                    return clamp01to100(Number(u.erotization_max));
+                return 0;
+            }
+            function setErotMax(u, n) {
+                const v = clamp01to100(Number(n));
+                u.safety_envelope = {
+                    ...(u.safety_envelope || {}),
+                    erotization_max: v,
+                };
+            }
+
+            // ---------- Load ----------
+            async function load() {
+                try {
+                    const res = await fetch(SOURCE_URL, { cache: "no-store" });
+                    const data = await res.json();
+
+                    rootIsArray = Array.isArray(data);
+                    universes = rootIsArray ? data : data.universes || [];
+
+                    // draft override
                     const draft = localStorage.getItem(STORAGE_KEY);
                     if (draft) {
                         universes = JSON.parse(draft);
@@ -232,86 +395,162 @@
                     } else {
                         setStatus("universes.json carregado");
                     }
-                    renderList();
-                });
 
-            // ---------- UI ----------
+                    renderList();
+                    // auto-select first
+                    if (universes.length) selectUniverse(0);
+                } catch (e) {
+                    setStatus("Erro ao carregar universes.json");
+                    console.error(e);
+                }
+            }
+
+            // ---------- List ----------
             function renderList() {
-                const list = document.getElementById("universeList");
+                const q = (el("search").value || "").toLowerCase();
+                const list = el("universeList");
                 list.innerHTML = "";
+
                 universes.forEach((u, i) => {
+                    const id = u.id || "??";
+                    const name = getName(u) || "";
+                    const label = `${id}  ${name}`.trim();
+
+                    if (q && !label.toLowerCase().includes(q)) return;
+
                     const div = document.createElement("div");
                     div.className =
                         "list-item" + (i === currentIndex ? " active" : "");
-                    div.textContent = `${u.id || "?"}  ${u.name || ""}`;
+                    div.textContent = label;
                     div.onclick = () => selectUniverse(i);
                     list.appendChild(div);
                 });
             }
 
+            // ---------- Select ----------
             function selectUniverse(i) {
                 currentIndex = i;
-                const u = universes[i];
-                id.value = u.id || "";
-                name.value = u.name || "";
-                classification.value = u.classification || "";
-                temporal_policy.value = u.temporal_policy || "";
-                memory_policy.value = u.memory_policy || "";
-                tone.value = (u.tone || []).join("\n");
-                themes.value = (u.themes || []).join("\n");
-                erotization_max.value =
-                    u.safety_envelope?.erotization_max ?? "";
+                const u = universes[i] || {};
+
+                el("f_id").value = u.id || "";
+                el("f_name").value = getName(u);
+                el("f_classification").value = getClassification(u);
+
+                el("f_temporal").value = getTemporal(u);
+                el("f_memory").value = getMemory(u);
+
+                el("f_tone").value = toLines(u.tone);
+                el("f_themes").value = toLines(u.themes);
+
+                el("f_erot").value = String(getErotMax(u));
+
                 renderList();
                 updatePreview();
             }
 
-            // ---------- AUTO SAVE ----------
-            document.querySelectorAll("input, textarea").forEach((el) => {
-                el.addEventListener("input", () => {
+            // ---------- Auto-save / merge preserving unknown fields ----------
+            function commitFormToUniverse() {
+                if (currentIndex === null) return;
+                const u = universes[currentIndex];
+                if (!u) return;
+
+                // update only the fields we own (preserving everything else)
+                u.id = (el("f_id").value || "").trim();
+                setName(u, (el("f_name").value || "").trim());
+                setClassification(
+                    u,
+                    (el("f_classification").value || "").trim(),
+                );
+
+                setTemporal(u, (el("f_temporal").value || "").trim());
+                setMemory(u, (el("f_memory").value || "").trim());
+
+                u.tone = fromLines(el("f_tone").value);
+                u.themes = fromLines(el("f_themes").value);
+
+                setErotMax(u, el("f_erot").value);
+
+                // autosave
+                localStorage.setItem(
+                    STORAGE_KEY,
+                    JSON.stringify(universes, null, 2),
+                );
+                setStatus("Auto-save: rascunho salvo");
+                renderList();
+                updatePreview();
+            }
+
+            document.querySelectorAll("input, textarea").forEach((node) => {
+                node.addEventListener("input", () => {
                     if (currentIndex === null) return;
-                    const u = universes[currentIndex];
-                    u.id = id.value;
-                    u.name = name.value;
-                    u.classification = classification.value;
-                    u.temporal_policy = temporal_policy.value;
-                    u.memory_policy = memory_policy.value;
-                    u.tone = tone.value.split("\n").filter(Boolean);
-                    u.themes = themes.value.split("\n").filter(Boolean);
-                    u.safety_envelope = {
-                        erotization_max: Number(erotization_max.value || 0),
-                    };
-                    localStorage.setItem(
-                        STORAGE_KEY,
-                        JSON.stringify(universes, null, 2),
-                    );
-                    setStatus("Auto-save ativo (rascunho salvo)");
-                    renderList();
-                    updatePreview();
+                    commitFormToUniverse();
                 });
             });
 
-            // ---------- PREVIEW ----------
+            el("search").addEventListener("input", renderList);
+
+            // ---------- Preview ----------
             function updatePreview() {
-                if (currentIndex === null) return;
+                if (currentIndex === null) {
+                    el("preview").textContent = "";
+                    return;
+                }
                 const u = universes[currentIndex];
-                preview.textContent = `UNIVERSO ATIVO
-${u.name}
+
+                const nome = getName(u) || "(sem nome)";
+                const tone = (u.tone || []).join(", ") || "(não definido)";
+                const themes = (u.themes || []).join(", ") || "(não definido)";
+                const erot = getErotMax(u);
+
+                el("preview").textContent = `UNIVERSO ATIVO
+${nome}
 
 Tom:
-${(u.tone || []).join(", ")}
+${tone}
 
 Temas:
-${(u.themes || []).join(", ")}
+${themes}
 
-Erotização máxima permitida: ${u.safety_envelope?.erotization_max}/100
+Erotização máxima permitida: ${erot}/100
 
-O executor tem liberdade para criar espaços, ritmo e dinâmica social conforme necessário.`;
+Direção criativa:
+- Use os dados como base e expanda com liberdade.
+- Você pode criar espaços, ritmo e dinâmica social quando necessário para o mundo funcionar.
+- Continuidade pode ser local ao chat; novo prompt redefine o setup.
+- Não prenda a execução em formato rígido.`;
             }
 
-            // ---------- ACTIONS ----------
+            // ---------- Actions ----------
             function newUniverse() {
-                universes.push({});
+                const nextId = suggestNextId();
+                const obj = {
+                    id: nextId,
+                    name: "",
+                    classification: "",
+                    temporal_policy: "",
+                    memory_policy: "",
+                    tone: [],
+                    themes: [],
+                    safety_envelope: { erotization_max: 0 },
+                };
+                universes.push(obj);
+                localStorage.setItem(
+                    STORAGE_KEY,
+                    JSON.stringify(universes, null, 2),
+                );
+                renderList();
                 selectUniverse(universes.length - 1);
+                setStatus("Novo universo criado (auto-salvo)");
+            }
+
+            function suggestNextId() {
+                const nums = universes
+                    .map((u) => (u.id || "").match(/^U-(\d+)$/))
+                    .filter(Boolean)
+                    .map((m) => Number(m[1]));
+                const max = nums.length ? Math.max(...nums) : 0;
+                const n = String(max + 1).padStart(2, "0");
+                return `U-${n}`;
             }
 
             function restoreDraft() {
@@ -323,14 +562,16 @@ O executor tem liberdade para criar espaços, ritmo e dinâmica social conforme 
                 universes = JSON.parse(draft);
                 currentIndex = null;
                 renderList();
+                if (universes.length) selectUniverse(0);
                 setStatus("Rascunho restaurado manualmente");
             }
 
             function downloadJSON() {
-                const blob = new Blob(
-                    [JSON.stringify({ universes }, null, 2)],
-                    { type: "application/json" },
-                );
+                // export in original shape
+                const payload = rootIsArray ? universes : { universes };
+                const blob = new Blob([JSON.stringify(payload, null, 2)], {
+                    type: "application/json",
+                });
                 const a = document.createElement("a");
                 a.href = URL.createObjectURL(blob);
                 a.download = "universes.json";
@@ -338,9 +579,11 @@ O executor tem liberdade para criar espaços, ritmo e dinâmica social conforme 
                 setStatus("universes.json baixado");
             }
 
-            function setStatus(msg) {
-                status.textContent = msg;
-            }
+            el("btnNew").addEventListener("click", newUniverse);
+            el("btnRestore").addEventListener("click", restoreDraft);
+            el("btnDownload").addEventListener("click", downloadJSON);
+
+            load();
         </script>
     </body>
 </html>
