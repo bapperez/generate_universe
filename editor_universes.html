@@ -280,6 +280,37 @@
 
             <section class="preview">
                 <h2>Preview narrativo</h2>
+
+                <div class="actions" style="margin: 8px 0 12px">
+                    <label
+                        style="
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+                            margin: 0;
+                            color: var(--muted);
+                            font-size: 12px;
+                        "
+                    >
+                        <input type="checkbox" id="toggleColdOpen" />
+                        Cold open (começar no impacto)
+                    </label>
+
+                    <label
+                        style="
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+                            margin: 0;
+                            color: var(--muted);
+                            font-size: 12px;
+                        "
+                    >
+                        <input type="checkbox" id="toggleCinematic" />
+                        Modo cinematic (linguagem de câmera)
+                    </label>
+                </div>
+
                 <div class="preview-box" id="preview"></div>
             </section>
         </main>
@@ -320,6 +351,38 @@
             function clamp01to100(n) {
                 const x = Number.isFinite(n) ? n : 0;
                 return Math.max(0, Math.min(100, Math.round(x)));
+            }
+            function isColdOpenOn() {
+                return !!el("toggleColdOpen")?.checked;
+            }
+
+            function isCinematicOn() {
+                return !!el("toggleCinematic")?.checked;
+            }
+
+            function buildColdOpenBlock(universeName, toneArr, themesArr) {
+                const tone = (toneArr || []).slice(0, 3).join(", ");
+                const themes = (themesArr || []).slice(0, 4).join(", ");
+                return `COLD OPEN (em plena ação)
+            — Você começa no meio do evento, sem prólogo.
+            — Sem explicação inicial. O mundo se revela por consequência.
+
+            Entrada sugerida:
+            • Algo já está acontecendo quando a cena abre.
+            • O leitor entende o universo por sinais: tom (${tone || "livre"}), temas (${themes || "livre"}).
+            • Evite “acordar/olhar pela janela” como início.\n`;
+            }
+
+            function buildCinematicBlock() {
+                return `MODO CINEMATIC (linguagem de câmera)
+            — Use linguagem audiovisual: planos, cortes, som, luz, ritmo.
+            — Alternar entre macro (ambiente) e micro (gestos/olhar/mão/respiração).
+            — Sugestão de gramática:
+              • PLANO ABERTO → estabelece o mundo
+              • CORTE SECO → acelera
+              • CLOSE → intensifica (rosto, detalhe, textura)
+              • SOM → atmosfera (ambiente, passos, respiração)
+              • LUZ → humor (contraste, neon, dourado, fluorescente)\n`;
             }
 
             // Fallbacks legacy
@@ -499,26 +562,40 @@
                 const u = universes[currentIndex];
 
                 const nome = getName(u) || "(sem nome)";
-                const tone = (u.tone || []).join(", ") || "(não definido)";
-                const themes = (u.themes || []).join(", ") || "(não definido)";
+                const toneArr = u.tone || [];
+                const themesArr = u.themes || [];
+                const tone = toneArr.join(", ") || "(não definido)";
+                const themes = themesArr.join(", ") || "(não definido)";
                 const erot = getErotMax(u);
 
-                el("preview").textContent = `UNIVERSO ATIVO
-${nome}
+                let blocks = [];
 
-Tom:
-${tone}
+                // toggles aplicam "camadas" no topo do preview
+                if (isColdOpenOn())
+                    blocks.push(buildColdOpenBlock(nome, toneArr, themesArr));
+                if (isCinematicOn()) blocks.push(buildCinematicBlock());
 
-Temas:
-${themes}
+                // bloco base (sempre)
+                blocks.push(
+                    `UNIVERSO ATIVO
+            ${nome}
 
-Erotização máxima permitida: ${erot}/100
+            Tom:
+            ${tone}
 
-Direção criativa:
-- Use os dados como base e expanda com liberdade.
-- Você pode criar espaços, ritmo e dinâmica social quando necessário para o mundo funcionar.
-- Continuidade pode ser local ao chat; novo prompt redefine o setup.
-- Não prenda a execução em formato rígido.`;
+            Temas:
+            ${themes}
+
+            Erotização máxima permitida: ${erot}/100
+
+            Direção criativa:
+            - Use os dados como base e expanda com liberdade.
+            - Você pode criar espaços, ritmo e dinâmica social quando necessário para o mundo funcionar.
+            - Continuidade pode ser local ao chat; novo prompt redefine o setup.
+            - Não prenda a execução em formato rígido.`,
+                );
+
+                el("preview").textContent = blocks.join("\n\n");
             }
 
             // ---------- Actions ----------
@@ -583,6 +660,8 @@ Direção criativa:
             el("btnNew").addEventListener("click", newUniverse);
             el("btnRestore").addEventListener("click", restoreDraft);
             el("btnDownload").addEventListener("click", downloadJSON);
+            el("toggleColdOpen").addEventListener("change", updatePreview);
+            el("toggleCinematic").addEventListener("change", updatePreview);
 
             load();
             function copyPreview() {
