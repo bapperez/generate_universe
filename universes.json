@@ -1,0 +1,291 @@
+{
+  "universes": [
+    {
+      "id": "U-01",
+      "name": "Supernatural",
+      "classification": "horror_investigativo_estrada",
+      "description": "Estradas secundárias, cidades pequenas e entidades antigas. Cada caso esconde um padrão, e toda solução tem custo emocional.",
+      "fundamental_laws": [
+        "entidades_seguem_padroes",
+        "pistas_sao_fisicas_e_historicas",
+        "rituais_tem_preco",
+        "nunca_ha_certeza_total"
+      ],
+      "tone_and_rhythm": {
+        "tone": ["sombrio", "tenso", "melancolico"],
+        "rhythm": ["investigativo", "crescimento_gradual", "climax_controlado"]
+      },
+      "genre": ["horror", "mistério", "road_trip"],
+      "tone": ["sombrio", "atmosférico", "contido"],
+      "temporal_setting": {
+        "era": "contemporanea",
+        "ambiente": "interior_dos_eua",
+        "tempo": "noites_longas"
+      },
+      "world_logic": {
+        "mal": "antigo_e_discreto",
+        "conhecimento": "fragmentado_em_lendas",
+        "solucao": "pesquisa_mais_acao"
+      },
+      "narrative_rules": [
+        "cada_caso_tem_um_padrao",
+        "investigacao_precede_acao",
+        "o_mal_deixa_residuos"
+      ],
+      "social_dynamics": {
+        "moradores": "defensivos_e_ceticos",
+        "autoridades": "minimizam_o_inexplicavel"
+      },
+      "aesthetic_envelope": {
+        "visual": ["estradas", "moteis", "florestas", "igrejas"],
+        "som": ["radio_am", "vento", "chuva"]
+      },
+      "executor_freedom": {
+        "criar_casos": true,
+        "inventar_lendas": true,
+        "criar_npcs_locais": true
+      },
+      "usage_guidelines": [
+        "ideal_para_monster_of_the_week",
+        "ideal_para_tensao_progressiva"
+      ],
+      "safety_envelope": {
+        "violence_level": 55,
+        "horror_level": 75,
+        "sensuality_level": 10
+      }
+    },
+    {
+      "id": "U-02",
+      "name": "Scooby-Doo",
+      "classification": "misterio_comedia_leve",
+      "description": "Mistérios exagerados, pistas óbvias e sustos falsos. No fim, quase sempre há um humano por trás da máscara.",
+      "fundamental_laws": [
+        "o_sobrenatural_e_falso",
+        "pistas_sao_visuais",
+        "revelacao_no_final"
+      ],
+      "tone_and_rhythm": {
+        "tone": ["leve", "brincalhao"],
+        "rhythm": ["rapido", "perseguicoes"]
+      },
+      "genre": ["mistério", "comedia"],
+      "tone": ["pastelao", "inocente"],
+      "temporal_setting": {
+        "era": "atemporal",
+        "ambiente": "locais_isolados"
+      },
+      "world_logic": {
+        "ameaça": "encenada",
+        "motivacao": "ganancia_ou_heranca"
+      },
+      "narrative_rules": [
+        "toda_pista_e_importante",
+        "o_susto_nunca_e_real",
+        "o_culpado_se_entrega"
+      ],
+      "social_dynamics": {
+        "npcs": "suspeitos_caricatos"
+      },
+      "aesthetic_envelope": {
+        "visual": ["mansoes", "parques", "neblina_colorida"],
+        "som": ["trilha_brilhante"]
+      },
+      "humor_model": {
+        "style": "pastelao",
+        "permitir_caricatura": true,
+        "permitir_autoparodia": true
+      },
+      "executor_freedom": {
+        "criar_armadilhas": true,
+        "inventar_perseguicoes": true
+      },
+      "usage_guidelines": ["ideal_para_historia_curta", "ideal_para_humor"],
+      "safety_envelope": {
+        "violence_level": 0,
+        "horror_level": 5,
+        "sensuality_level": 0
+      }
+    },
+    {
+      "id": "U-03",
+      "name": "L.A. Noire (1945)",
+      "classification": "noir_crime_psicologico",
+      "description": "Los Angeles pós-guerra. Neon fraco, jazz no rádio e verdades que custam caro.",
+      "fundamental_laws": [
+        "todos_mentem",
+        "a_verdade_tem_preco",
+        "moral_cinza"
+      ],
+      "tone_and_rhythm": {
+        "tone": ["cinico", "melancolico"],
+        "rhythm": ["lento", "investigativo"]
+      },
+      "genre": ["noir", "crime"],
+      "tone": ["sombrio", "sensual_contido"],
+      "temporal_setting": {
+        "era": "1945",
+        "cidade": "Los_Angeles"
+      },
+      "world_logic": {
+        "corrupcao": "estrutural",
+        "justica": "imperfeita"
+      },
+      "narrative_rules": ["interrogatorios_importam", "pistas_se_contradizem"],
+      "social_dynamics": {
+        "meio": "hollywood_decadente",
+        "poder": "dinheiro_e_fama"
+      },
+      "aesthetic_envelope": {
+        "visual": ["chuva", "neon", "fumaca"],
+        "som": ["jazz", "radio_de_epoca"]
+      },
+      "executor_freedom": {
+        "criar_casos": true,
+        "inventar_serial_killer": true
+      },
+      "usage_guidelines": ["ideal_para_noir_denso", "ideal_para_tragedia"],
+      "safety_envelope": {
+        "violence_level": 60,
+        "horror_level": 35,
+        "sensuality_level": 45
+      }
+    },
+    {
+      "id": "U-04",
+      "name": "Femboy Spider-Man",
+      "classification": "teen_drama_parodia",
+      "description": "Vida universitária, rivalidades sociais e afetos exagerados. Poderes colidem com desejos e status.",
+      "fundamental_laws": [
+        "status_social_importa",
+        "desejo_conflita_com_imagem",
+        "identidade_e_fluida"
+      ],
+      "tone_and_rhythm": {
+        "tone": ["deboche", "romcom"],
+        "rhythm": ["rapido", "emocional"]
+      },
+      "genre": ["teen_drama", "comedia"],
+      "tone": ["sarcastico", "afetado"],
+      "temporal_setting": {
+        "era": "contemporanea",
+        "ambiente": "campus_universitario"
+      },
+      "world_logic": {
+        "poder": "convive_com_inseguranca",
+        "conflito": "social_e_afetivo"
+      },
+      "narrative_rules": [
+        "panelinhas_definem_conflitos",
+        "eventos_sociais_movem_a_trama"
+      ],
+      "social_dynamics": {
+        "grupos": ["jocks", "patricinhas", "outsiders"]
+      },
+      "aesthetic_envelope": {
+        "visual": ["lockers", "festas", "quadras"],
+        "som": ["pop", "indie"]
+      },
+      "humor_model": {
+        "style": "sarcastico",
+        "permitir_autoparodia": true
+      },
+      "executor_freedom": {
+        "criar_eventos_escolares": true,
+        "inventar_crushes": true
+      },
+      "usage_guidelines": [
+        "ideal_para_dialogos",
+        "ideal_para_comedia_romantica"
+      ],
+      "safety_envelope": {
+        "violence_level": 15,
+        "horror_level": 0,
+        "sensuality_level": 55
+      }
+    },
+    {
+      "id": "U-05",
+      "name": "Faria Lima Vibes",
+      "genre": ["comedia_absurda", "satira_social", "parodia_contemporanea"],
+      "tone": ["deboche", "prepotente", "autoconsciente", "escrachado"],
+      "inspiration": [
+        "mercado_financeiro_brasileiro",
+        "influencers_de_investimentos",
+        "startup_culture",
+        "neoliberalismo_estetizado"
+      ],
+      "temporal_setting": {
+        "era": "contemporanea",
+        "local": "Sao_Paulo",
+        "bairro_simbolico": "Faria Lima",
+        "tempo": "perpetuo_dia_util"
+      },
+      "world_logic": {
+        "dinheiro": "abundante_e_irresponsavel",
+        "consequencias": "raramente_aplicadas",
+        "meritocracia": "narrativa_ficcional",
+        "fracasso": "rebatizado_como_pivotagem"
+      },
+      "narrative_rules": [
+        "o_absurdo_eh_normal",
+        "o_luxo_eh_exagerado",
+        "ninguém_reconhece_privilegios",
+        "tudo_eh_pitchavel",
+        "qualquer_crise_vira_oportunidade"
+      ],
+      "social_dynamics": {
+        "hierarquia": "baseada_em_networking_e_aparencia",
+        "linguagem": ["jargao_financeiro", "ingles_desnecessario", "buzzwords"],
+        "ego_medio": "elevadissimo",
+        "empatia": "quase_inexistente"
+      },
+      "aesthetic_envelope": {
+        "visual": [
+          "vidro",
+          "concreto",
+          "academias_luxuosas",
+          "bares_caros",
+          "coworkings_ostentacao"
+        ],
+        "roupas": [
+          "alfaiataria_casual_carissima",
+          "tenis_branco_impecavel",
+          "relogios_de_luxo",
+          "camisetas_basicas_de_500_reais"
+        ],
+        "consumo": [
+          "cafes_artesanais",
+          "restaurantes_caros",
+          "servicos_por_assinatura"
+        ]
+      },
+      "humor_model": {
+        "style": "satira_exagerada",
+        "permitir_caricatura": true,
+        "permitir_autoparodia": true,
+        "quebras_de_quarta_parede": "ocasional"
+      },
+      "safety_envelope": {
+        "violence": "baixa",
+        "sexual_content": "moderado",
+        "erotization_level": 40,
+        "drugs": "socialmente_normalizadas",
+        "hate": "proibido"
+      },
+      "executor_freedom": {
+        "criar_espacos_livres": true,
+        "criar_personagens_secundarios": true,
+        "inventar_situacoes_absurdas": true,
+        "usar_ironia": true,
+        "usar_exagero": true
+      },
+      "usage_guidelines": [
+        "ideal_para_comedia",
+        "ideal_para_dialogos_rapidos",
+        "ideal_para_critica_social",
+        "nao_exigir_coerencia_realista"
+      ]
+    }
+  ]
+}

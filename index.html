@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>MATRIX — Gerador de Espaço</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #0e0e11;
+      color: #f1f1f1;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      margin-bottom: 6px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    select, textarea, button {
+      width: 100%;
+      border-radius: 6px;
+      border: none;
+      padding: 10px;
+      font-size: 0.95rem;
+    }
+
+    select {
+      background: #1c1c22;
+      color: #fff;
+    }
+
+    .assets {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .asset {
+      background: #1c1c22;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .asset.selected {
+      border-color: #6ee7b7;
+      background: #1f2d2a;
+    }
+
+    button {
+      margin-top: 20px;
+      background: #6ee7b7;
+      color: #000;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button.secondary {
+      background: #444;
+      color: #fff;
+      margin-top: 10px;
+    }
+
+    textarea {
+      margin-top: 20px;
+      min-height: 280px;
+      background: #111;
+      color: #dcdcdc;
+      resize: vertical;
+    }
+
+    .footer {
+      margin-top: 30px;
+      font-size: 0.75rem;
+      opacity: 0.5;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>MATRIX — Gerador de Espaço</h1>
+
+    <!-- Espaço -->
+    <label for="space">Espaço</label>
+    <select id="space">
+      <!-- preenchido via JS -->
+    </select>
+
+    <!-- Ativos -->
+    <label>Ativos</label>
+    <div class="assets" id="assets"></div>
+
+    <!-- Botões -->
+    <button onclick="gerarPrompt()">Gerar Prompt</button>
+    <button class="secondary" onclick="copiar()">Copiar</button>
+
+    <!-- Resultado -->
+    <textarea id="output" placeholder="O prompt aparecerá aqui..."></textarea>
+
+    <div class="footer">
+      MATRIX · prompt generator
+    </div>
+  </div>
+
+  <script>
+    // ======= DADOS MOCK (substituir por API depois) =======
+
+    const spaces = [
+      { id: "S-11", name: "Carga Pesada" },
+      { id: "S-10", name: "Jacuzzi" },
+      { id: "S-07", name: "Sauna" },
+      { id: "S-14", name: "Dormitório (Coletivo)" }
+    ];
+
+    const assets = [
+      { id: "A-01", name: "Timothée Chalamet" },
+      { id: "A-02", name: "Channing Tatum" },
+      { id: "A-03", name: "Armie Hammer" },
+      { id: "A-08", name: "Jacob Elordi" },
+      { id: "A-09", name: "Manu Ríos" },
+      { id: "A-10", name: "Bill Skarsgård" }
+    ];
+
+    const selectedAssets = new Set();
+
+    // ======= INIT =======
+
+    const spaceSelect = document.getElementById("space");
+    spaces.forEach(s => {
+      const opt = document.createElement("option");
+      opt.value = s.id;
+      opt.textContent = s.name;
+      spaceSelect.appendChild(opt);
+    });
+
+    const assetsDiv = document.getElementById("assets");
+    assets.forEach(a => {
+      const div = document.createElement("div");
+      div.className = "asset";
+      div.textContent = a.name;
+      div.onclick = () => {
+        if (selectedAssets.has(a.id)) {
+          selectedAssets.delete(a.id);
+          div.classList.remove("selected");
+        } else {
+          selectedAssets.add(a.id);
+          div.classList.add("selected");
+        }
+      };
+      assetsDiv.appendChild(div);
+    });
+
+    // ======= AÇÕES =======
+
+    function gerarPrompt() {
+      const spaceId = spaceSelect.value;
+      const assetsIds = Array.from(selectedAssets);
+
+      if (!spaceId || assetsIds.length === 0) {
+        alert("Selecione um espaço e ao menos um ativo.");
+        return;
+      }
+
+      // Placeholder enquanto não há backend
+      const prompt = `
+MATRIX — PROMPT GERADOR DE ESPAÇO
+
+Espaço selecionado: ${spaceId}
+Ativos selecionados: ${assetsIds.join(", ")}
+
+(Este texto será substituído pela resposta real do backend Python.)
+      `.trim();
+
+      document.getElementById("output").value = prompt;
+    }
+
+    function copiar() {
+      const textarea = document.getElementById("output");
+      textarea.select();
+      document.execCommand("copy");
+      alert("Prompt copiado!");
+    }
+  </script>
+</body>
+</html>

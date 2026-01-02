@@ -1,0 +1,136 @@
+{
+  "config": {
+    "output": {
+      "file": "prompt_out.txt",
+      "auto_view": true,
+      "pager": "less",
+      "pager_args": ["-R"],
+      "fallback": "cat"
+    }
+  },
+  "universe": {
+    "id": "EX-001",
+    "name": "Gerador de Universos Experimental",
+    "classification": "SANDBOX_CONTROLADO",
+    "temporal_policy": "linear_local",
+    "memory_policy": "isolada",
+    "sensualidade_nivel": 80
+  },
+  "gemini_contract": {
+    "role": "executor_local_de_espaco",
+    "principios": [
+      "liberdade_criativa_com_coerencia",
+      "continuar_contexto_sem_reset_automatico",
+      "usar_silencio_e_pausa_como_conteudo"
+    ],
+    "limites_estruturais": [
+      "nao_criar_leis_do_universo",
+      "nao_alterar_arquitetura_dos_dados",
+      "nao_inventar_memoria_global",
+      "nao_referenciar_outros_espacos_sem_autorizacao"
+    ]
+  },
+  "memory_model": {
+    "type": "implicita",
+    "episodica_enabled_default": true,
+    "rules": [
+      "ativos_nao_lembram_eventos_brutos",
+      "apenas_estados_influenciam_comportamento",
+      "memoria_episodica_so_em_espacos_lista_branca"
+    ],
+    "episodic_whitelist_space_ids": ["S-02", "S-14", "S-13"]
+  },
+  "constraints": {
+    "state_ranges": {
+      "stamina": [0, 100],
+      "cansaco": [0, 100],
+      "entropia": [0, 100],
+      "conforto": [0, 100],
+      "tecido_adiposo": [0, 100],
+      "musculatura": [0, 100]
+    },
+    "aesthetic_safety": {
+      "avoid_musculatura_gt": 90,
+      "avoid_tecido_adiposo_lt": 8
+    }
+  },
+  "wardrobe_system": {
+    "enabled": true,
+    "rule": "roupa_responde_ao_espaco",
+    "template": "parte_superior + parte_inferior + calcado + ajustes_contextuais",
+    "brand_guidance": {
+      "enabled": true,
+      "notes": [
+        "usar_marcas_conhecidas_ou_premium",
+        "estetica_contemporanea",
+        "bom_gosto_sem_exagero"
+      ]
+    },
+    "space_outfit_policies": {
+      "S-01": {
+        "policy": "neutro_contemplativo",
+        "notes": ["cores_neutras", "tecidos_leves", "cortes_simples"]
+      },
+      "S-02": {
+        "policy": "contencao_sobria",
+        "notes": ["tons_medios", "pouco_contraste", "roupa_fechada"]
+      },
+      "S-03": {
+        "policy": "treino_funcional",
+        "notes": ["tecido_tecnico", "mobilidade", "respirabilidade"]
+      },
+      "S-04": {
+        "policy": "casual_social",
+        "notes": ["confortavel", "arrumado_simples"]
+      },
+      "S-05": {
+        "policy": "cinético_estetico",
+        "notes": ["mobilidade", "leveza"]
+      },
+      "S-06": {
+        "policy": "sensorial_controlado",
+        "notes": ["minimo_funcional", "toalha_chinelos"]
+      },
+      "S-07": {
+        "policy": "sauna_minimo_funcional",
+        "notes": ["toalha", "chinelos"]
+      },
+      "S-08": {
+        "policy": "yoga_disciplina",
+        "notes": ["roupa_elastica", "conforto", "seguranca"]
+      },
+      "S-09": {
+        "policy": "calistenia_disciplina",
+        "notes": ["roupa_elastica", "aderencia"]
+      },
+      "S-10": {
+        "policy": "jacuzzi_ludico",
+        "notes": ["minimo_funcional", "toalha_chinelos_ou_traje_piscina"]
+      },
+      "S-11": {
+        "policy": "carga_pesada",
+        "notes": ["tecido_tecnico", "estabilidade", "tenis_firme"]
+      },
+      "S-12": {
+        "policy": "vestiario_transicao",
+        "notes": ["seco", "funcional", "sem_acessorios"]
+      },
+      "S-13": {
+        "policy": "descanso_ventilado",
+        "notes": ["leve", "solto"]
+      },
+      "S-14": {
+        "policy": "dormitorio_descanso",
+        "notes": ["pijama_simples", "conforto"]
+      },
+      "S-15": {
+        "policy": "piscina",
+        "notes": ["traje_banho_simples"]
+      },
+      "B-01": {
+        "policy": "boate_social",
+        "notes": ["casual_noite", "sem_marcas_status"]
+      }
+    }
+  }
+}

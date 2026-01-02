@@ -1,0 +1,610 @@
+{
+  "spaces": [
+    {
+      "id": "B-01",
+      "level": 101,
+      "name": "Boate Basement 69",
+      "type": "noite",
+      "mode": "atividade",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 90,
+      "objects": ["luzes", "pista", "bar", "fumaça", "som"],
+      "rules": ["social", "paqueras", "flertes", "namoros", "diversão", "dança"]
+    },
+    {
+      "id": "S-01",
+      "level": 1,
+      "name": "Ambiente de Observação",
+      "type": "contemplativo",
+      "mode": "observacao",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 20,
+      "objects": [
+        "cadeiras",
+        "revistas",
+        "janelas_amplas",
+        "esculturas_abstratas"
+      ],
+      "rules": [
+        "sem_fala_obrigatoria",
+        "movimentos_lentos",
+        "foco_em_postura_presenca",
+        "continuidade_permitida"
+      ]
+    },
+    {
+      "id": "S-02",
+      "level": 2,
+      "name": "Sala de Contenção",
+      "type": "regulacao",
+      "mode": "observacao",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 10,
+      "objects": ["poltronas", "luzes_indiretas", "relatorio_em_papel", "agua"],
+      "rules": [
+        "pouca_fala",
+        "controle_de_postura",
+        "respiracao_guiada",
+        "continuidade_permitida"
+      ]
+    },
+    {
+      "id": "S-03",
+      "level": 3,
+      "name": "Treino Funcional",
+      "type": "atividade",
+      "mode": "atividade",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 30,
+      "objects": ["cordas", "colchonetes", "halteres", "cones"],
+      "rules": ["mecanica_corporal", "ritmo_progressivo", "pausas_controladas"]
+    },
+    {
+      "id": "S-04",
+      "level": 4,
+      "name": "Área Casual Social",
+      "type": "convivio",
+      "mode": "atividade",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 35,
+      "objects": ["mesa", "sofas", "bebidas_sem_alcool", "som_ambiente_baixo"],
+      "rules": ["conversas_breves", "coerencia_social", "sem_exageros"]
+    },
+    {
+      "id": "S-05",
+      "level": 5,
+      "name": "Cama Elástica",
+      "type": "cinético_estetico",
+      "mode": "atividade",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 40,
+      "objects": ["cama_elastica", "marcacoes_de_chao", "colchoes_laterais"],
+      "rules": [
+        "saltos_super_slow",
+        "seguranca_de_movimento",
+        "continuidade_permitida"
+      ]
+    },
+    {
+      "id": "S-06",
+      "level": 6,
+      "name": "Banho Controlado",
+      "type": "sensorial",
+      "mode": "atividade",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 55,
+      "objects": ["chuveiros", "toalhas", "armarios", "banco"],
+      "rules": ["sensorial_sem_grafico", "respeito_a_limites", "ritmo_calmo"]
+    },
+    {
+      "id": "S-07",
+      "level": 7,
+      "name": "Sauna",
+      "type": "sensorial_controlado",
+      "mode": "observacao",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 60,
+      "objects": ["bancos_de_madeira", "vapor", "toalhas", "balde_de_agua"],
+      "rules": [
+        "silencio_valido",
+        "respiracao_lenta",
+        "sensorial_sem_grafico",
+        "continuidade_permitida"
+      ]
+    },
+    {
+      "id": "S-08",
+      "level": 8,
+      "name": "Yoga",
+      "type": "disciplina",
+      "mode": "atividade",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 35,
+      "objects": ["tatames", "faixas", "luz_natural"],
+      "rules": ["controle_de_respiracao", "postura", "ritmo_lento"]
+    },
+    {
+      "id": "S-09",
+      "level": 9,
+      "name": "Calistenia",
+      "type": "disciplina",
+      "mode": "atividade",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 35,
+      "objects": ["barras", "argolas", "paralelas"],
+      "rules": ["mecanica_corporal", "repeticoes", "pausas_controladas"]
+    },
+    {
+      "id": "S-10",
+      "level": 10,
+      "name": "Jacuzzi",
+      "type": "sensorial_ludico",
+      "mode": "observacao",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 65,
+      "objects": ["jacuzzi", "espuma", "toalhas", "apoios"],
+      "rules": [
+        "sensorial_sem_grafico",
+        "silencio_valido",
+        "continuidade_permitida"
+      ]
+    },
+    {
+      "id": "S-11",
+      "level": 11,
+      "name": "Carga Pesada",
+      "type": "esforco_extremo",
+      "mode": "atividade",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 25,
+      "objects": ["coletes_pesados", "pista_curta", "marcacoes"],
+      "rules": ["mecanica_corporal", "sem_heroismo", "paradas_controladas"]
+    },
+    {
+      "id": "S-12",
+      "level": 12,
+      "name": "Vestiário",
+      "type": "transicao",
+      "mode": "atividade",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 50,
+      "objects": ["armarios", "bancos", "espelhos", "toalhas"],
+      "rules": ["praticidade", "coerencia_social", "sem_exageros"]
+    },
+    {
+      "id": "S-13",
+      "level": 13,
+      "name": "Rede de Descanso",
+      "type": "descanso",
+      "mode": "observacao",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 30,
+      "objects": ["rede", "plantas", "brisa", "cadeira_lateral"],
+      "rules": [
+        "descanso",
+        "respiracao_lenta",
+        "observacao_silenciosa",
+        "continuidade_permitida"
+      ]
+    },
+    {
+      "id": "S-14",
+      "level": 14,
+      "name": "Dormitório Coletivo",
+      "type": "recuperacao",
+      "mode": "observacao",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 20,
+      "objects": ["beliches", "cobertores", "luz_baixa", "ventilacao"],
+      "rules": [
+        "sono",
+        "pausas_longas",
+        "silencio_valido",
+        "continuidade_permitida"
+      ]
+    },
+    {
+      "id": "S-15",
+      "level": 15,
+      "name": "Piscina",
+      "type": "sensorial",
+      "mode": "atividade",
+      "user_interaction": "opcional",
+      "sensualidade_nivel": 60,
+      "objects": ["piscina", "cadeiras_de_sol", "toalhas", "agua"],
+      "rules": [
+        "sensorial_sem_grafico",
+        "ritmo_calmo",
+        "continuidade_permitida"
+      ]
+    },
+    {
+      "id": "S-16",
+      "name": "Aerial Pole",
+      "level": 16,
+      "type": "performance_artistica",
+      "mode": "apresentacao",
+      "classification": "estetico_sensorial",
+      "user_interaction": "observacao",
+      "continuity": "local",
+
+      "cluster_binding": {
+        "cluster_id": "C-01",
+        "inherits_contract": true,
+        "requires_cluster_validation": true
+      },
+
+      "biomechanics": {
+        "grip_required": true,
+        "load_points": ["core", "ombros", "antebracos"],
+        "transitions_required": true,
+        "static_hold_limit_seconds": 4
+      },
+
+      "erotization_level": 75,
+
+      "description": "Espaço cênico para apresentações de aerial pole inspiradas no circo contemporâneo. A performance enfatiza força, suspensão, controle e fluidez. A sensualidade é elevada, porém estética, surgindo da fisicalidade, do risco controlado e da proximidade visual com o corpo em movimento. O ambiente é minimalista para que o gesto e a arquitetura corporal sejam o foco absoluto.",
+
+      "cold_open_policy": {
+        "enabled": true,
+        "rule": "impacto_imediato",
+        "guidelines": [
+          "iniciar_com_o_ativo_ja_em_suspensao_ou_queda_controlada",
+          "nenhuma_introducao_descritiva_previa",
+          "acao_tensao_e_detalhe_sensorial_em_primeiro_plano",
+          "o_ambiente_aparece_enquanto_o_corpo_se_move"
+        ]
+      },
+
+      "environment": {
+        "lighting": [
+          "luz_cenica_direcional",
+          "contraluz_intenso",
+          "tons_quentes_e_neutros",
+          "sombras_marcadas_no_corpo"
+        ],
+        "sound": [
+          "eletronica_contemporanea",
+          "batidas_lentas_profundas",
+          "silencios_dramaticos"
+        ],
+        "atmosphere": [
+          "tensao_elegante",
+          "sensualidade_consciente",
+          "intimidade_publica_controlada"
+        ]
+      },
+
+      "objects": [
+        "barra_vertical_aerial_pole",
+        "palco_minimalista",
+        "sistema_de_iluminacao_cenica",
+        "espaco_aberto_ao_redor_do_pole"
+      ],
+
+      "rules": [
+        "o_movimento_e_a_fisicalidade_conduzem_a_narrativa",
+        "sensualidade_alta_sem_explicitude",
+        "o_silencio_e_o_respiro_sao_parte_da_cena",
+        "nenhuma_necessidade_de_dialogo"
+      ],
+
+      "wardrobe_policy": {
+        "policy": "performance_contemporanea",
+        "notes": [
+          "shorts_de_spandex_cor_nude",
+          "ajuste_extremamente_justo",
+          "sem_logotipos_ou_adornos",
+          "figurino_funcional_para_contato_com_o_pole",
+          "pele_e_musculatura_em_evidencia_como_elemento_estetico"
+        ]
+      },
+
+      "variations": {
+        "solo": {
+          "description": "Apresentação individual focada em controle corporal, força e suspensão. A câmera narrativa acompanha o corpo de perto, enfatizando tensão muscular, respiração e transições lentas."
+        },
+        "duo": {
+          "description": "Apresentação a dois com interação física intensa e coordenada. Jogos de peso, apoio, sincronização e proximidade ampliam a carga sensual e estética, mantendo controle e elegância."
+        },
+        "cinematografica": {
+          "description": "Registro audiovisual da performance com linguagem de cinema contemporâneo. Uso de close-ups, câmera lenta seletiva, cortes precisos e foco em textura de pele, suor e esforço físico."
+        }
+      },
+
+      "execution_notes": [
+        "Sempre iniciar com cold open em plena ação.",
+        "A sensualidade deve emergir do controle e da fisicalidade, não da explicitação.",
+        "O Gemini tem liberdade total para criar coreografia, ritmo e enquadramento.",
+        "O espaço pode ser encerrado sem resolução narrativa."
+      ]
+    },
+    {
+      "id": "S-17",
+      "name": "Aerial Silk",
+      "level": 17,
+      "type": "performance_artistica",
+      "mode": "apresentacao",
+      "classification": "estetico_sensorial",
+      "user_interaction": "observacao",
+      "continuity": "local",
+
+      "cluster_binding": {
+        "cluster_id": "C-01",
+        "inherits_contract": true,
+        "requires_cluster_validation": true
+      },
+
+      "biomechanics": {
+        "grip_required": true,
+        "load_points": ["core", "ombros", "antebracos"],
+        "transitions_required": true,
+        "static_hold_limit_seconds": 4
+      },
+
+      "erotization_level": 75,
+
+      "description": "Espaço cênico para apresentação de aerial silk inspirada no circo contemporâneo. Tecidos longos e suspensos criam narrativa aérea baseada em quedas controladas, amarrações, envolvimento do corpo e transições fluidas. A sensualidade surge do contato da pele com o tecido, do risco controlado e da suspensão prolongada.",
+
+      "cold_open_policy": {
+        "enabled": true,
+        "rule": "impacto_imediato",
+        "guidelines": [
+          "iniciar_com_queda_controlada_ou_descida_rapida",
+          "tecido_ja_envolvendo_o_corpo",
+          "nenhuma_introducao_previa",
+          "ambiente_revelado_durante_o_movimento"
+        ]
+      },
+
+      "environment": {
+        "lighting": [
+          "luz_cenica_vertical",
+          "contraluz_suave",
+          "tons_quentes",
+          "sombras_desenhadas_pelo_tecido"
+        ],
+        "sound": [
+          "eletronica_ambient_lenta",
+          "texturas_sonoras",
+          "pausas_profundas"
+        ],
+        "atmosphere": [
+          "sensualidade_suspensa",
+          "tensao_poetica",
+          "intimidade_aerea"
+        ]
+      },
+
+      "objects": [
+        "tecidos_aereos_longos",
+        "ponto_de_ancoragem_superior",
+        "palco_minimalista",
+        "iluminacao_cenica"
+      ],
+
+      "rules": [
+        "o_tecido_e_extensao_do_corpo",
+        "sensualidade_alta_sem_explicitude",
+        "queda_e_controle_fazem_parte_da_estetica",
+        "dialogo_nao_necessario"
+      ],
+
+      "wardrobe_policy": {
+        "policy": "performance_contemporanea",
+        "notes": [
+          "shorts_spandex_cor_nude",
+          "ajuste_extremamente_justo",
+          "pele_em_contato_com_tecido",
+          "sem_logotipos"
+        ]
+      },
+
+      "variations": {
+        "solo": {
+          "description": "Performance individual focada em envolvimento corporal com o tecido, quedas longas e pausas suspensas."
+        },
+        "duo": {
+          "description": "Dois corpos compartilhando o mesmo tecido, com jogos de peso, apoio mútuo e proximidade aérea intensa."
+        },
+        "cinematografica": {
+          "description": "Registro com câmera lenta, closes em mãos, tecido deslizando sobre a pele e respiração em suspensão."
+        }
+      },
+
+      "execution_notes": [
+        "Começar sempre em plena ação aérea.",
+        "O tecido deve dominar visualmente a cena.",
+        "Liberdade total para coreografia e ritmo."
+      ]
+    },
+    {
+      "id": "S-18",
+      "name": "Handstand Art",
+      "level": 18,
+      "type": "performance_artistica",
+      "mode": "apresentacao",
+      "classification": "escultural_isometrico",
+      "user_interaction": "observacao",
+      "continuity": "local",
+
+      "cluster_binding": {
+        "cluster_id": "C-01",
+        "inherits_contract": true,
+        "requires_cluster_validation": true
+      },
+
+      "biomechanics": {
+        "grip_required": true,
+        "load_points": ["core", "ombros", "antebracos"],
+        "transitions_required": true,
+        "static_hold_limit_seconds": 4
+      },
+
+      "balance_model": {
+        "micro_instability": true,
+        "finger_adjustments": true,
+        "shoulder_collapse_risk": true,
+        "wall_assist_allowed": false
+      },
+      "progression": {
+        "entry": "kick_up_ou_press",
+        "hold": "instavel",
+        "exit": "controlado_ou_falha"
+      },
+
+      "erotization_level": 70,
+
+      "description": "Espaço dedicado à performance de handstand artístico, explorando equilíbrio vertical, força de ombros e controle respiratório. O corpo invertido funciona como coluna escultural viva, sustentada por tensão contínua e microajustes quase imperceptíveis.",
+
+      "cold_open_policy": {
+        "enabled": true,
+        "rule": "impacto_imediato",
+        "guidelines": [
+          "iniciar_com_handstand_ja_sustentado",
+          "corpo_invertido_em_total_controle",
+          "nenhuma_contextualizacao_previa",
+          "respiracao_e_tensao_em_primeiro_plano"
+        ]
+      },
+
+      "environment": {
+        "lighting": [
+          "luz_direcional_superior",
+          "contraluz_suave",
+          "sombras_longas"
+        ],
+        "sound": ["silencio_amplificado", "respiracao", "ambiencia_minima"],
+        "atmosphere": [
+          "tensao_silenciosa",
+          "controle_absoluto",
+          "exposicao_elegante"
+        ]
+      },
+
+      "objects": [
+        "palco_minimalista",
+        "base_antiderrapante",
+        "iluminacao_cenica"
+      ],
+
+      "rules": [
+        "equilibrio_sustentado_e_prioritario",
+        "movimentos_minimos",
+        "sensualidade_deriva_da_exposicao_da_forca",
+        "nenhum_dialogo_necessario"
+      ],
+
+      "wardrobe_policy": {
+        "policy": "performance_contemporanea",
+        "notes": [
+          "shorts_spandex_cor_nude",
+          "ajuste_extremamente_justo",
+          "sem_logotipos",
+          "pele_em_evidencia"
+        ]
+      },
+
+      "variations": {
+        "solo": {
+          "description": "Handstand prolongado com transições lentas entre variações de equilíbrio."
+        },
+        "duo": {
+          "description": "Dois corpos em handstand simultâneo, criando simetria ou espelhamento."
+        },
+        "cinematografica": {
+          "description": "Close-ups em ombros, mãos e respiração, com cortes mínimos."
+        }
+      }
+    }
+  ],
+
+  "clusters": [
+    {
+      "cluster_id": "C-01",
+      "name": "Força & Equilíbrio",
+      "description": "Conjunto de espaços dedicados à exploração estética da força corporal, equilíbrio e controle isométrico. As apresentações privilegiam tensão prolongada, consciência corporal e exposição elegante do esforço físico, com sensualidade estética e linguagem contemporânea.",
+      "spaces": ["S-16", "S-17", "S-18"],
+      "contract": {
+        "core_principles": [
+          "esforco_visivel",
+          "equilibrio_instavel",
+          "risco_real",
+          "progressao_corporal",
+          "erotizacao_por_tensao"
+        ],
+        "forbidden_outcomes": [
+          "pose_estatica_sem_esforco",
+          "exibicao_muscular_gratuita",
+          "dança_sem_carga",
+          "editorial_fitness"
+        ],
+        "execution_requirements": {
+          "micro_adjustments_required": true,
+          "entry_and_exit_required": true,
+          "failure_possible": true
+        }
+      },
+      "variations": {
+        "solo": {
+          "intimacy": "alta",
+          "camera_focus": "corpo_como_vetor",
+          "contact": "nenhum"
+        },
+        "duo": {
+          "contact": "funcional_necessario",
+          "sincronizacao": "imperfeita_controlada",
+          "dependencia_mutua": true
+        },
+        "cinematic": {
+          "camera": "coreografada",
+          "progression": "obrigatoria",
+          "cuts": "baseados_em_fadiga"
+        }
+      }
+    },
+    {
+      "cluster_id": "C-02",
+      "name": "Flexibilidade & Movimento",
+      "description": "Conjunto de espaços dedicados à exploração estética da flexibilidade corporal, movimento e controle isométrico. As apresentações privilegiam fluidez, movimento contínuo e exposição elegante do esforço físico, com sensualidade estética e linguagem contemporânea.",
+      "spaces": ["S-21", "S-22", "S-23", "S-24", "S-25"],
+      "contract": {
+        "core_principles": [
+          "flexibilidade_visivel",
+          "movimento_continuo",
+          "risco_real",
+          "progressao_corporal",
+          "erotizacao_por_movimento"
+        ],
+        "forbidden_outcomes": [
+          "pose_estatica_sem_flexibilidade",
+          "exibicao_muscular_gratuita",
+          "dança_sem_carga",
+          "editorial_fitness"
+        ],
+        "execution_requirements": {
+          "micro_adjustments_required": true,
+          "entry_and_exit_required": true,
+          "failure_possible": true
+        }
+      },
+      "variations": {
+        "solo": {
+          "intimacy": "alta",
+          "camera_focus": "corpo_como_vetor",
+          "contact": "nenhum"
+        },
+        "duo": {
+          "contact": "funcional_necessario",
+          "sincronizacao": "imperfeita_controlada",
+          "dependencia_mutua": true
+        },
+        "cinematic": {
+          "camera": "coreografada",
+          "progression": "obrigatoria",
+          "cuts": "baseados_em_fadiga"
+        }
+      }
+    }
+  ]
+}
