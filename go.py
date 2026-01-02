@@ -334,7 +334,7 @@ def print_dashboard(
     clear_screen()
     top = "┌──────────────────────── MATRIX :: CONSOLE ────────────────────────┐"
     mid = "│ STATUS: READY            MODE: GENERATOR           VERSION: 1.0   │"
-    bot = "└────────────────────────────────────────────────────────────────────┘"
+    bot = "└───────────────────────────────────────────────────────────────────┘"
     print(_hdr(top, C_GRAY))
     print(_hdr(mid, C_GRAY))
     print(_hdr(bot, C_GRAY))
